@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+#logging:
+#  level:
+#    "ROOT": DEBUG
+#    "org.hibernate.type.descriptor.sql.BasicBinder": TRACE
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/querydsl?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: jintao
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    open-in-view: false
+    properties:
+      "hibernate.format_sql" : true
+    hibernate:
+      ddl-auto: update
+
+
