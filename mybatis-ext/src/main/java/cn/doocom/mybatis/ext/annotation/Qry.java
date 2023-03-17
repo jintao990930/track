@@ -18,7 +18,7 @@ public @interface Qry {
 
     Op value() default Op.EQ;
     Ck validation() default Ck.NONE;
-
-    Gp group() default @Gp(bind = Bn.NONE, id = "-1");
+    Gp group() default @Gp(bind = Bn.NONE, id = "");
+    String column() default "";
 
 }
