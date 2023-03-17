@@ -1,7 +1,11 @@
 package cn.doocom.mybatis.ext.enums;
 
-public enum Unary implements Base {
+/**
+ * Operator
+ */
+public enum Op {
 
+    // unary
     EQ,
     NE,
     GT,
@@ -14,5 +18,13 @@ public enum Unary implements Base {
     LIKE_RIGHT,
     NOT_LIKE_LEFT,
     NOT_LIKE_RIGHT,
+
+    // binary
+    BETWEEN,
+    NOT_BETWEEN,
+
+    // multi
+    IN,
+    NOT_IN,
 
 }
