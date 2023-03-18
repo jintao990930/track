@@ -1,10 +1,10 @@
 package cn.doocom.mybatis.ext;
 
-import cn.doocom.mybatis.ext.parser.QueryWrapperParser;
+import cn.doocom.mybatis.ext.parser.QueryClassParser;
 
 public class QueryWrapperTemplate {
 
-    private QueryWrapperParser queryWrapperParser;
+    private QueryClassParser queryClassParser;
 
     public static void main(String[] args) {
     }
