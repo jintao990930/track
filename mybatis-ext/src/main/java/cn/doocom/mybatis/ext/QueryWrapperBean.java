@@ -7,5 +7,4 @@ public class QueryWrapperBean<T> {
     private String id;
     private LambdaQueryWrapper<T> queryWrapper;
 
-
 }
