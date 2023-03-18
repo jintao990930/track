@@ -1,9 +1,6 @@
 package cn.doocom.mybatis.ext.enums;
 
-/**
- * Check
- */
-public enum Ck {
+public enum Check {
 
     NONE,
     /**
@@ -18,7 +15,5 @@ public enum Ck {
      * for Collection
      */
     NOT_EMPTY
-
-
 
 }

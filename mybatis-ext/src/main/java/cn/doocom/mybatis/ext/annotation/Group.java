@@ -1,6 +1,6 @@
 package cn.doocom.mybatis.ext.annotation;
 
-import cn.doocom.mybatis.ext.enums.Bn;
+import cn.doocom.mybatis.ext.enums.Binding;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({})
-public @interface Gp {
+public @interface Group {
 
-    Bn bind() default Bn.AND;
+    Binding bind() default Binding.AND;
 
     String id();
 

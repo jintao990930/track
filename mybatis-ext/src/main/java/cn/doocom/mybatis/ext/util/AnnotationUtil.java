@@ -11,20 +11,20 @@ public class AnnotationUtil {
         return getAnnotatedFields(clz, annotation, false);
     }
 
-    public static List<Field> getAnnotatedFields(Class<?> clz, Class<? extends Annotation> annotation, boolean withSuperClass) {
+    public static List<Field> getAnnotatedFields(Class<?> clz, Class<? extends Annotation> annotation, boolean includeSuperClass) {
         List<Field> res = new ArrayList<>();
-        if (withSuperClass)
-            doGetAnnotatedFieldsWithSuperClass(clz, annotation, res);
+        if (includeSuperClass)
+            doGetAnnotatedFieldsIncludeSuperClass(clz, annotation, res);
         else
             doGetAnnotatedFields(clz, annotation, res);
         return res;
     }
 
-    private static void doGetAnnotatedFieldsWithSuperClass(Class<?> clz, Class<? extends Annotation> annotation, List<Field> res) {
+    private static void doGetAnnotatedFieldsIncludeSuperClass(Class<?> clz, Class<? extends Annotation> annotation, List<Field> res) {
         Class<?> superClz;
         if (Object.class == clz || (superClz = clz.getSuperclass()) == null)
             return ;
-        doGetAnnotatedFieldsWithSuperClass(superClz, annotation, res);
+        doGetAnnotatedFieldsIncludeSuperClass(superClz, annotation, res);
         Field[] declaredFields = clz.getDeclaredFields();
         for (Field field : declaredFields) {
             if (field.isAnnotationPresent(annotation)) {

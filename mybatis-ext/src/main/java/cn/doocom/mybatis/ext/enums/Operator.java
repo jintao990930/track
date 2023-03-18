@@ -1,9 +1,6 @@
 package cn.doocom.mybatis.ext.enums;
 
-/**
- * Operator
- */
-public enum Op {
+public enum Operator {
 
     // unary
     EQ,

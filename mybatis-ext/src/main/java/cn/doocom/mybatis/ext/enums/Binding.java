@@ -1,9 +1,6 @@
 package cn.doocom.mybatis.ext.enums;
 
-/**
- * Bind
- */
-public enum Bn {
+public enum Binding {
 
     NONE,
     AND,
