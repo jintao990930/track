@@ -18,7 +18,9 @@ public class SimpleQueryWrapperParser implements QueryWrapperParser {
     public <T> QueryWrapperBean<T> parseClass(Class<T> clz, boolean includeSuperclass) {
         List<Field> fields = AnnotationUtil.getAnnotatedFields(clz, Query.class, includeSuperclass);
         LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery(clz);
-        String id = generateId(clz) + ID_INCLUDE_SUPERCLASS_SUFFIX;
+        String id = generateId(clz);
+        if (includeSuperclass)
+            id = id + ID_INCLUDE_SUPERCLASS_SUFFIX;
 
         return queryWrapperBean(id, queryWrapper);
     }
