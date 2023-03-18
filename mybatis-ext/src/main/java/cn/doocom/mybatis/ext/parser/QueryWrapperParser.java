@@ -4,6 +4,10 @@ import cn.doocom.mybatis.ext.QueryWrapperBean;
 
 public interface QueryWrapperParser {
 
-    <T> QueryWrapperBean<T> parseClass(Class<?> clz);
+    default <T> QueryWrapperBean<T> parseClass(Class<?> clz) {
+        return parseClass(clz, false);
+    }
+
+    <T> QueryWrapperBean<T> parseClass(Class<?> clz, boolean includeSuperClass);
 
 }
