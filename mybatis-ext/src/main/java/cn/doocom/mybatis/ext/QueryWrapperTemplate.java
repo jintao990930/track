@@ -1,6 +1,6 @@
 package cn.doocom.mybatis.ext;
 
-public class QueryWrapperUtils {
+public class QueryWrapperTemplate {
 
     public static void main(String[] args) {
     }
