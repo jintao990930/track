@@ -4,7 +4,7 @@ import cn.doocom.mybatis.ext.QueryWrapperBean;
 import cn.doocom.mybatis.ext.annotation.Query;
 import cn.doocom.mybatis.ext.parser.QueryClassParser;
 import cn.doocom.mybatis.ext.util.AnnotationUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import java.lang.reflect.Field;
@@ -17,11 +17,10 @@ public class SimpleQueryClassParser implements QueryClassParser {
     @Override
     public <T> QueryWrapperBean<T> parseClass(Class<T> clz, boolean includeSuperclass) {
         List<Field> fields = AnnotationUtil.getAnnotatedFields(clz, Query.class, includeSuperclass);
-        LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery(clz);
+        QueryWrapper<T> queryWrapper = Wrappers.query();
         String id = generateId(clz);
         if (includeSuperclass)
             id = id + ID_INCLUDE_SUPERCLASS_SUFFIX;
-
         return queryWrapperBean(id, queryWrapper);
     }
 
@@ -29,7 +28,7 @@ public class SimpleQueryClassParser implements QueryClassParser {
         return clz.getName();
     }
 
-    private <T> QueryWrapperBean<T> queryWrapperBean(String id, LambdaQueryWrapper<T> queryWrapper) {
+    private <T> QueryWrapperBean<T> queryWrapperBean(String id, QueryWrapper<T> queryWrapper) {
         QueryWrapperBean<T> queryWrapperBean = new QueryWrapperBean<>();
         queryWrapperBean.setId(id);
         queryWrapperBean.setQueryWrapper(queryWrapper);

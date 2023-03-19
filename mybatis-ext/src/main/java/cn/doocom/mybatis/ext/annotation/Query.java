@@ -15,7 +15,7 @@ public @interface Query {
 
     Operator value() default Operator.EQ;
     Check validation() default Check.NONE;
-    Group group() default @Group(bind = Binding.NONE, id = "");
+    Group group() default @Group("");
     String column() default "";
 
 }

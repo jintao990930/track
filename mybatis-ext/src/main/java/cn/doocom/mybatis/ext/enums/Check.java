@@ -1,19 +1,31 @@
 package cn.doocom.mybatis.ext.enums;
 
+import java.util.Objects;
+import java.util.function.Function;
+
 public enum Check {
 
-    NONE,
+    NONE(o -> true),
     /**
      * for Object
      */
-    NOT_NULL,
+    NOT_NULL(Objects::nonNull),
     /**
      * for String
      */
-    NOT_BLANK,
+    // TODO
+    NOT_BLANK(o -> true),
     /**
-     * for Collection
+     * for String, Array, Collection, Map
      */
-    NOT_EMPTY
+    // TODO
+    NOT_EMPTY(o -> true),
+    ;
+
+    final Function<?, Boolean> expression;
+
+    Check(Function<?, Boolean> expression) {
+        this.expression = expression;
+    }
 
 }

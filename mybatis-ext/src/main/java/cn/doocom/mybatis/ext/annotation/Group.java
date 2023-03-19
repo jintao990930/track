@@ -10,8 +10,7 @@ import java.lang.annotation.Target;
 @Target({})
 public @interface Group {
 
-    Binding bind() default Binding.AND;
-
-    String id();
+    String value();
+    Binding bind() default Binding.NONE;
 
 }
