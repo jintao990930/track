@@ -1,6 +1,7 @@
 package cn.doocom.mybatis.ext.enums;
 
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Map;
 import java.util.function.Function;
 
 public enum Check {
@@ -9,23 +10,49 @@ public enum Check {
     /**
      * for Object
      */
-    NOT_NULL(Objects::nonNull),
+    NOT_NULL(Check::notNull),
     /**
      * for String
      */
-    // TODO
-    NOT_BLANK(o -> true),
+    NOT_BLANK(Check::notBlank),
     /**
      * for String, Array, Collection, Map
      */
-    // TODO
-    NOT_EMPTY(o -> true),
+    NOT_EMPTY(Check::notEmpty),
     ;
 
     final Function<?, Boolean> expression;
 
     Check(Function<?, Boolean> expression) {
         this.expression = expression;
+    }
+
+    public Function<?, Boolean> getExpression() {
+        return expression;
+    }
+
+    private static Boolean notNull(Object obj) {
+        return obj != null;
+    }
+
+    private static Boolean notBlank(Object obj) {
+        if (obj instanceof String) {
+            return !((String) obj).trim().isEmpty();
+        }
+        throw new IllegalArgumentException("parameter should be of type \"String\";");
+    }
+
+    private static Boolean notEmpty(Object obj) {
+        if (obj instanceof String) {
+            return !((String) obj).isEmpty();
+        } else if (obj.getClass().isArray()) {
+            return ((Object[]) obj).length > 0;
+        } else if (obj instanceof Collection) {
+            return !((Collection<?>) obj).isEmpty();
+        } else if (obj instanceof Map) {
+            return !((Map<?, ?>) obj).isEmpty();
+        }
+        throw new IllegalArgumentException("parameter should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
     }
 
 }
