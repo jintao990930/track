@@ -12,8 +12,9 @@ public @interface Column {
 
     /**
      * alias for operator
+     * @return
      */
-    Operator value() default Operator.EQ;
+    Operator value();
     String column() default "";
 
 }

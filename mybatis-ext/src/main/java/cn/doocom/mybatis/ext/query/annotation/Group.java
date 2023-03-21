@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 public @interface Group {
 
     /**
-     * alias for "id"
+     * alias for id
      * @return
      */
     String value();
-    Binding bind() default Binding.NONE;
+    Binding binding() default Binding.NONE;
 
 }

@@ -12,8 +12,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface QueryField {
 
-    Operator[] value() default Operator.EQ;
-    Check validation() default Check.NONE;
+    /**
+     * alias for column
+     * @return
+     */
+    Column[] value() default {@Column(Operator.EQ)};
+    Check check() default Check.NONE;
     Group group() default @Group("");
 
 }
