@@ -1,6 +1,6 @@
 package cn.doocom.mybatis.ext.query.enums;
 
-public enum Binding {
+public enum Logic {
 
     NONE,
     AND,

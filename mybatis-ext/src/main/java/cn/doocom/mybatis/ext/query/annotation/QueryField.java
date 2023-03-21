@@ -14,10 +14,9 @@ public @interface QueryField {
 
     /**
      * alias for column
-     * @return
      */
     Column[] value() default {@Column(Operator.EQ)};
     Check check() default Check.NONE;
-    Group group() default @Group("");
+    Binding binding() default @Binding("");
 
 }

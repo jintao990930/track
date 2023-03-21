@@ -12,7 +12,6 @@ public @interface Column {
 
     /**
      * alias for operator
-     * @return
      */
     Operator value();
     String column() default "";
