@@ -1,6 +1,6 @@
-package cn.doocom.mybatis.ext.annotation;
+package cn.doocom.mybatis.ext.query.annotation;
 
-import cn.doocom.mybatis.ext.enums.Binding;
+import cn.doocom.mybatis.ext.query.enums.Binding;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,6 +10,10 @@ import java.lang.annotation.Target;
 @Target({})
 public @interface Group {
 
+    /**
+     * alias for "id"
+     * @return
+     */
     String value();
     Binding bind() default Binding.NONE;
 

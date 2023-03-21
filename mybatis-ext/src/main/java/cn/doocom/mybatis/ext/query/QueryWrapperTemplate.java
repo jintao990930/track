@@ -1,6 +1,6 @@
-package cn.doocom.mybatis.ext;
+package cn.doocom.mybatis.ext.query;
 
-import cn.doocom.mybatis.ext.parser.QueryClassParser;
+import cn.doocom.mybatis.ext.query.parser.QueryClassParser;
 
 public class QueryWrapperTemplate {
 

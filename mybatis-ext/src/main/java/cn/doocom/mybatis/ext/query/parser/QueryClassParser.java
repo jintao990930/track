@@ -1,6 +1,6 @@
-package cn.doocom.mybatis.ext.parser;
+package cn.doocom.mybatis.ext.query.parser;
 
-import cn.doocom.mybatis.ext.QueryWrapperBean;
+import cn.doocom.mybatis.ext.query.QueryWrapperBean;
 
 public interface QueryClassParser {
 

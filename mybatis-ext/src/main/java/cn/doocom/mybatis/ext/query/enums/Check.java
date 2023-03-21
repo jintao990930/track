@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.ext.enums;
+package cn.doocom.mybatis.ext.query.enums;
 
 import java.util.Collection;
 import java.util.Map;

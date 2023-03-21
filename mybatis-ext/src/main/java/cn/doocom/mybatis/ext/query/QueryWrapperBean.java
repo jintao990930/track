@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.ext;
+package cn.doocom.mybatis.ext.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 

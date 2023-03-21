@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.ext.enums;
+package cn.doocom.mybatis.ext.query.enums;
 
 public enum Binding {
 

@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.ext.util;
+package cn.doocom.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
