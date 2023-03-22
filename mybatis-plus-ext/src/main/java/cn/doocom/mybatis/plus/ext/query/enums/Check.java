@@ -44,13 +44,13 @@ public enum Check {
 
     private static Boolean notEmpty(Object obj) {
         if (obj instanceof String) {
-            return !((String) obj).isEmpty();
+            return ((String) obj).length() > 0;
         } else if (obj.getClass().isArray()) {
             return ((Object[]) obj).length > 0;
         } else if (obj instanceof Collection) {
-            return !((Collection<?>) obj).isEmpty();
+            return ((Collection<?>) obj).size() > 0;
         } else if (obj instanceof Map) {
-            return !((Map<?, ?>) obj).isEmpty();
+            return ((Map<?, ?>) obj).size() > 0;
         }
         throw new IllegalArgumentException("The argument should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
     }

@@ -1,7 +1,7 @@
 package cn.doocom.mybatis.plus.ext.query.parser.impl;
 
 import cn.doocom.mybatis.plus.ext.query.QueryWrapperBean;
-import cn.doocom.mybatis.plus.ext.query.annotation.QueryField;
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
 import cn.doocom.util.AnnotationUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,7 +16,7 @@ public class SimpleQueryClassParser implements QueryClassParser {
 
     @Override
     public <T> QueryWrapperBean<T> parseClass(Class<T> clz, boolean includeSuperclass) {
-        List<Field> fields = AnnotationUtil.getAnnotatedFields(clz, QueryField.class, includeSuperclass);
+        List<Field> fields = AnnotationUtil.getAnnotatedFields(clz, QueryColumn.class, includeSuperclass);
         QueryWrapper<T> queryWrapper = Wrappers.query();
         String id = generateId(clz);
         if (includeSuperclass)
