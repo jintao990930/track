@@ -39,7 +39,7 @@ public enum Check {
         if (obj instanceof String) {
             return !((String) obj).trim().isEmpty();
         }
-        throw new IllegalArgumentException("parameter should be of type \"String\";");
+        throw new IllegalArgumentException("The argument should be of type \"String\";");
     }
 
     private static Boolean notEmpty(Object obj) {
@@ -52,7 +52,7 @@ public enum Check {
         } else if (obj instanceof Map) {
             return !((Map<?, ?>) obj).isEmpty();
         }
-        throw new IllegalArgumentException("parameter should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
+        throw new IllegalArgumentException("The argument should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
     }
 
 }
