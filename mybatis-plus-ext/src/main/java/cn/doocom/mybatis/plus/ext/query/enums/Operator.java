@@ -1,40 +1,35 @@
 package cn.doocom.mybatis.plus.ext.query.enums;
 
+import cn.doocom.mybatis.plus.ext.query.function.BaseOperation;
+import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
+
 public enum Operator {
 
-    // Type.UNARY
-    EQ(Type.UNARY),
-    NE(Type.UNARY),
-    GT(Type.UNARY),
-    GE(Type.UNARY),
-    LT(Type.UNARY),
-    LE(Type.UNARY),
-    LIKE(Type.UNARY),
-    NOT_LIKE(Type.UNARY),
-    LIKE_LEFT(Type.UNARY),
-    LIKE_RIGHT(Type.UNARY),
-    NOT_LIKE_LEFT(Type.UNARY),
-    NOT_LIKE_RIGHT(Type.UNARY),
+    // UnaryOperation
+    EQ(((wrapper, column, value) -> wrapper.eq(column, value))),
+    NE((wrapper, column, value) -> wrapper.ne(column, value)),
+    GT((wrapper, column, value) -> wrapper.gt(column, value)),
+    GE((wrapper, column, value) -> wrapper.ge(column, value)),
+    LT((wrapper, column, value) -> wrapper.lt(column, value)),
+    LE((wrapper, column, value) -> wrapper.le(column, value)),
+    LIKE((wrapper, column, value) -> wrapper.like(column, value)),
+    NOT_LIKE((wrapper, column, value) -> wrapper.notLike(column, value)),
+    LIKE_LEFT((wrapper, column, value) -> wrapper.likeLeft(column, value)),
+    LIKE_RIGHT((wrapper, column, value) -> wrapper.likeRight(column, value)),
 
-    // Type.BINARY
-    BETWEEN(Type.BINARY),
-    NOT_BETWEEN(Type.BINARY),
+    // BinaryOperation
+    BETWEEN((BinaryOperation) (wrapper, column, value1, value2) -> wrapper.between(column, value1, value2)),
+    NOT_BETWEEN((BinaryOperation) (wrapper, column, value1, value2) -> wrapper.notBetween(column, value1, value2)),
 
-    // Type.MULTI
-    IN(Type.MULTI),
-    NOT_IN(Type.MULTI),
+    // MultiOperation
+    IN((wrapper, column, values) -> wrapper.in(column, values)),
+    NOT_IN((wrapper, column, values) -> wrapper.notIn(column, values)),
     ;
+    
+    final BaseOperation baseOperation;
 
-    final Type type;
-
-    Operator(Type type) {
-        this.type = type;
-    }
-
-    public enum Type {
-        UNARY,
-        BINARY,
-        MULTI
+    Operator(BaseOperation baseOperation) {
+        this.baseOperation = baseOperation;
     }
 
 }

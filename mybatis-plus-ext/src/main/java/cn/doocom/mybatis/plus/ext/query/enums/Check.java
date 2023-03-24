@@ -37,7 +37,7 @@ public enum Check {
 
     private static Boolean notBlank(Object obj) {
         if (obj instanceof String) {
-            return !((String) obj).trim().isEmpty();
+            return ((String) obj).trim().length() > 0;
         }
         throw new IllegalArgumentException("The argument should be of type \"String\";");
     }
