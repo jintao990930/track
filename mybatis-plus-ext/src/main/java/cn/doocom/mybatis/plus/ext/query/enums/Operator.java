@@ -26,10 +26,14 @@ public enum Operator {
     NOT_IN((wrapper, column, values) -> wrapper.notIn(column, values)),
     ;
     
-    final BaseOperation baseOperation;
+    final BaseOperation operation;
 
-    Operator(BaseOperation baseOperation) {
-        this.baseOperation = baseOperation;
+    Operator(BaseOperation operation) {
+        this.operation = operation;
+    }
+
+    public BaseOperation getOperation() {
+        return operation;
     }
 
 }
