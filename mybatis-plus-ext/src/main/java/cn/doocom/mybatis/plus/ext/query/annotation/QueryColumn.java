@@ -16,7 +16,7 @@ public @interface QueryColumn {
      */
     Operator value() default Operator.EQ;
     String column() default QueryConst.HUMP_2_UNDER_LINE_FLAG;
-    String groupId() default "";
+    String groupId() default QueryConst.MAIN_GROUP_ID;
     Logic logic() default Logic.AND;
 
 }

@@ -4,4 +4,6 @@ public interface QueryConst {
 
     String HUMP_2_UNDER_LINE_FLAG = "";
 
+    String MAIN_GROUP_ID = "";
+
 }
