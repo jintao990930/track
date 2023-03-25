@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Validation {
 
-    Check value() default Check.AUTO;
+    Check value() default Check.NOT_NULL;
 
 }

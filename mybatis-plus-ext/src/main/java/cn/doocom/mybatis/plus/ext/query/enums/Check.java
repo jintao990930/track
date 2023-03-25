@@ -6,13 +6,6 @@ import java.util.function.Function;
 
 public enum Check {
 
-    NONE(o -> true),
-    /**
-     * default
-     */
-    AUTO(o -> ObjectUtil.notBlank(o, false) ||
-            ObjectUtil.notEmpty(o, false) ||
-            ObjectUtil.notNull(o)),
     /**
      * for Object
      */
@@ -20,11 +13,11 @@ public enum Check {
     /**
      * for String
      */
-    NOT_BLANK(o -> ObjectUtil.notBlank(o, true)),
+    NOT_BLANK(ObjectUtil::notBlank),
     /**
      * for String, Array, Collection, Map
      */
-    NOT_EMPTY(o -> ObjectUtil.notEmpty(o, true)),
+    NOT_EMPTY(ObjectUtil::notEmpty),
     ;
 
     final Function<?, Boolean> expression;

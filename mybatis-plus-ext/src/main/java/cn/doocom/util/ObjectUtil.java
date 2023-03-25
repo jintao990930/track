@@ -9,17 +9,14 @@ public class ObjectUtil {
         return obj != null;
     }
 
-    public static boolean notBlank(Object obj, boolean throwable) {
+    public static boolean notBlank(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof String)
             return ((String) obj).trim().length() > 0;
-        if (throwable)
-            throw new IllegalArgumentException("The argument should be of type \"String\";");
-        else
-            return false;
+        throw new IllegalArgumentException("The argument should be of type \"String\";");
     }
 
-    public static boolean notEmpty(Object obj, boolean throwable) {
+    public static boolean notEmpty(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof String) {
             return ((String) obj).length() > 0;
@@ -30,10 +27,7 @@ public class ObjectUtil {
         } else if (obj instanceof Map) {
             return ((Map<?, ?>) obj).size() > 0;
         }
-        if (throwable)
-            throw new IllegalArgumentException("The argument should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
-        else
-            return false;
+        throw new IllegalArgumentException("The argument should be of type \"String\", \"Array\", \"Collection\", or \"Map\";");
     }
 
 }
