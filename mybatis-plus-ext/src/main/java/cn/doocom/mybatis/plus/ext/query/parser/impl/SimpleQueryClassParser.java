@@ -6,7 +6,7 @@ import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
 public class SimpleQueryClassParser implements QueryClassParser {
 
     @Override
-    public <T> QueryClass<T> parseClass(Class<T> clz) {
+    public QueryClass parseClass(Class<?> clz) {
         return null;
     }
 

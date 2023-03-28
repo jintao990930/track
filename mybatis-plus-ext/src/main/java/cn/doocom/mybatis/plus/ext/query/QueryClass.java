@@ -4,18 +4,18 @@ import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 
 import java.util.List;
 
-public class QueryClass<T> {
+public class QueryClass {
 
-    private Class<T> clz;
+    private Class<?> clz;
     private boolean includeSuperclass;
     private List<QueryField> queryFields;
     private List<QueryGroup> queryGroups;
 
-    public Class<T> getClz() {
+    public Class<?> getClz() {
         return clz;
     }
 
-    public void setClz(Class<T> clz) {
+    public void setClz(Class<?> clz) {
         this.clz = clz;
     }
 
