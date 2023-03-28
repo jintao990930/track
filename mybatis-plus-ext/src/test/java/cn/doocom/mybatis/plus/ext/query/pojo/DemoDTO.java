@@ -8,6 +8,7 @@ import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 @QueryGroup(id = QueryConst.MAIN_GROUP_ID)
 public class DemoDTO {
 
+//    @QueryColumn
     @QueryColumn
     @Validation
     private String keyWord;

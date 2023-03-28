@@ -1,6 +1,9 @@
 package cn.doocom.util;
 
+import com.sun.istack.internal.Nullable;
+
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,32 +16,30 @@ public class AnnotationUtil {
 
     public static List<Field> getAnnotatedFields(Class<?> clz, Class<? extends Annotation> annotation, boolean includeSuperclass) {
         List<Field> result = new ArrayList<>();
-        if (includeSuperclass)
-            doGetAnnotatedFieldsIncludeSuperclass(clz, annotation, result);
-        else
-            doGetAnnotatedFields(clz, annotation, result);
+        doGetAnnotatedFieldsIncludeSuperclass(clz, annotation, getContainerAnnotation(annotation), result, includeSuperclass);
         return result;
     }
 
-    private static void doGetAnnotatedFieldsIncludeSuperclass(Class<?> clz, Class<? extends Annotation> annotation, List<Field> result) {
+    public static Class<? extends Annotation> getContainerAnnotation(Class<? extends Annotation> annotation) {
+        if (annotation.isAnnotationPresent(Repeatable.class)) {
+            return annotation.getAnnotation(Repeatable.class).value();
+        }
+        return null;
+    }
+
+    private static void doGetAnnotatedFieldsIncludeSuperclass(Class<?> clz, Class<? extends Annotation> annotation,
+                                                              @Nullable Class<? extends Annotation> containerAnnotation,
+                                                              List<Field> result, boolean includeSuperclass) {
         Class<?> superclass;
         if (Object.class == clz || (superclass = clz.getSuperclass()) == null)
             return ;
-        doGetAnnotatedFieldsIncludeSuperclass(superclass, annotation, result);
+        if (includeSuperclass) 
+            doGetAnnotatedFieldsIncludeSuperclass(superclass, annotation, containerAnnotation, result, true);
         Field[] declaredFields = clz.getDeclaredFields();
         for (Field field : declaredFields) {
             if (field.isAnnotationPresent(annotation)) {
                 result.add(field);
-            }
-        }
-    }
-
-    private static void doGetAnnotatedFields(Class<?> clz, Class<? extends Annotation> annotation, List<Field> result) {
-        if (Object.class == clz || clz.getSuperclass() == null)
-            return ;
-        Field[] declaredFields = clz.getDeclaredFields();
-        for (Field field : declaredFields) {
-            if (field.isAnnotationPresent(annotation)) {
+            } else if (containerAnnotation != null && field.isAnnotationPresent(containerAnnotation)) {
                 result.add(field);
             }
         }

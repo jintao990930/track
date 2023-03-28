@@ -4,6 +4,6 @@ import cn.doocom.mybatis.plus.ext.query.QueryClass;
 
 public interface QueryClassParser {
 
-    QueryClass parseClass(Class<?> clz);
+    <T> QueryClass<T> parseClass(Class<T> clz);
 
 }
