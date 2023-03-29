@@ -1,4 +1,13 @@
 package cn.doocom.mybatis.plus.ext.query.parser.impl;
 
-public class CacheQueryWrapperParser {
+import cn.doocom.mybatis.plus.ext.query.parser.AbstractQueryWrapperParser;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+public class CacheQueryWrapperParser extends AbstractQueryWrapperParser {
+
+    @Override
+    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, boolean includeSuperclass) {
+        return null;
+    }
+
 }

@@ -15,10 +15,16 @@ import java.util.List;
 
 public class SimpleQueryClassParser implements QueryClassParser {
 
+    private final static QueryClassParser INSTANCE = new SimpleQueryClassParser();
+
     private final QueryFieldParser queryFieldParser;
 
-    public SimpleQueryClassParser(QueryFieldParser queryFieldParser) {
-        this.queryFieldParser = queryFieldParser;
+    public static QueryClassParser getInstance() {
+        return INSTANCE;
+    }
+
+    private SimpleQueryClassParser() {
+        this.queryFieldParser = SimpleQueryFieldParser.getInstance();
     }
 
     @Override
