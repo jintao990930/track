@@ -6,13 +6,16 @@ import cn.doocom.util.AnnotationUtil;
 
 import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class AnnotationTests {
-    public static void main(String[] args) {
-        List<Field> annotatedFields =
-                AnnotationUtil.getAnnotatedFields(DemoDTO.class, QueryColumn.class);
-        System.out.println("annotatedFields = " + annotatedFields);
+    public static void main(String[] args) throws NoSuchFieldException {
+
+        Field keyWord = DemoDTO.class.getDeclaredField("keyWord");
+        QueryColumn[] queryColumns = keyWord.getDeclaredAnnotationsByType(QueryColumn.class);
+        System.out.println("Arrays.toString(queryColumns) = " + Arrays.toString(queryColumns));
+        System.out.println(queryColumns.length);
     }
 }

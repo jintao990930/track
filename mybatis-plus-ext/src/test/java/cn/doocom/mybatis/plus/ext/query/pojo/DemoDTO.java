@@ -9,7 +9,7 @@ import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 public class DemoDTO {
 
 //    @QueryColumn
-    @QueryColumn
+//    @QueryColumn
     @Validation
     private String keyWord;
 

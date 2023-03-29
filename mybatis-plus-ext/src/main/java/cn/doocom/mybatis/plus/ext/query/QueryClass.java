@@ -6,17 +6,17 @@ import java.util.List;
 
 public class QueryClass {
 
-    private Class<?> clz;
+    private Class<?> clazz;
     private boolean includeSuperclass;
     private List<QueryField> queryFields;
     private List<QueryGroup> queryGroups;
 
-    public Class<?> getClz() {
-        return clz;
+    public Class<?> getClazz() {
+        return clazz;
     }
 
-    public void setClz(Class<?> clz) {
-        this.clz = clz;
+    public void setClazz(Class<?> clazz) {
+        this.clazz = clazz;
     }
 
     public boolean isIncludeSuperclass() {

@@ -7,8 +7,25 @@ import java.util.List;
 
 public class QueryField {
 
-    private Class<?> type;
     private List<QueryColumn> queryColumns;
     private Validation validation;
+
+    public QueryField() { }
+
+    public List<QueryColumn> getQueryColumns() {
+        return queryColumns;
+    }
+
+    public void setQueryColumns(List<QueryColumn> queryColumns) {
+        this.queryColumns = queryColumns;
+    }
+
+    public Validation getValidation() {
+        return validation;
+    }
+
+    public void setValidation(Validation validation) {
+        this.validation = validation;
+    }
 
 }
