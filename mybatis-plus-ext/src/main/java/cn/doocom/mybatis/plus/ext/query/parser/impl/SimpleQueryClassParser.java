@@ -4,7 +4,7 @@ import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
-import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
+import cn.doocom.mybatis.plus.ext.query.parser.AbstractQueryClassParser;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryFieldParser;
 import cn.doocom.util.AnnotationUtil;
 
@@ -13,18 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SimpleQueryClassParser implements QueryClassParser {
+public class SimpleQueryClassParser extends AbstractQueryClassParser {
 
-    private final static QueryClassParser INSTANCE = new SimpleQueryClassParser();
-
-    private final QueryFieldParser queryFieldParser;
-
-    public static QueryClassParser getInstance() {
-        return INSTANCE;
+    public SimpleQueryClassParser() {
+        super();
     }
 
-    private SimpleQueryClassParser() {
-        this.queryFieldParser = SimpleQueryFieldParser.getInstance();
+    public SimpleQueryClassParser(QueryFieldParser queryFieldParser) {
+        super(queryFieldParser);
     }
 
     @Override

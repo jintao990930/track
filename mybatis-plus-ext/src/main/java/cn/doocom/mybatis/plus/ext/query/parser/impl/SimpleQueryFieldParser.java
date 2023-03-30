@@ -10,14 +10,6 @@ import java.util.Arrays;
 
 public class SimpleQueryFieldParser implements QueryFieldParser {
 
-    private final static QueryFieldParser INSTANCE = new SimpleQueryFieldParser();
-
-    private SimpleQueryFieldParser() { }
-
-    public static QueryFieldParser getInstance() {
-        return INSTANCE;
-    }
-
     @Override
     public QueryField parseField(Field field) {
         QueryField result = new QueryField();
