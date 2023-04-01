@@ -6,4 +6,16 @@ public interface QueryConst {
 
     String MAIN_GROUP_ID = "";
 
+    String ALPHA = "alpha";
+
+    String BETA = "beta";
+
+    String GAMMA = "gamma";
+
+    String DELTA = "delta";
+
+    String PI = "pi";
+
+    String THETA = "theta";
+
 }

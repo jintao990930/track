@@ -3,6 +3,8 @@ package cn.doocom.mybatis.plus.ext.query;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.pojo.DemoDTO;
 import cn.doocom.util.AnnotationUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import org.junit.Test;
 
 import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
@@ -18,4 +20,13 @@ public class AnnotationTests {
         System.out.println("Arrays.toString(queryColumns) = " + Arrays.toString(queryColumns));
         System.out.println(queryColumns.length);
     }
+
+    @Test
+    public void test() {
+        DemoDTO str = null;
+        Object obj = str;
+        System.out.println(StringUtils.isNotBlank((CharSequence) obj));
+        System.out.println(obj instanceof String);
+    }
+
 }
