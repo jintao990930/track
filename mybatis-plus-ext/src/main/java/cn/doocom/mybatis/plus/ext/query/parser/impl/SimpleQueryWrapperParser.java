@@ -16,7 +16,7 @@ public class SimpleQueryWrapperParser extends AbstractQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, boolean includeSuperclass) {
+    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeSuperclass) {
         QueryWrapper<T> result = Wrappers.query();
 
         return result;

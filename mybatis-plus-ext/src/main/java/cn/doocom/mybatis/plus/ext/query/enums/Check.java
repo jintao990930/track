@@ -10,13 +10,13 @@ import java.util.function.Function;
 
 public enum Check {
 
-    AUTO(obj -> Check.notEmpty(obj, false)),
+    AUTO(Check::auto),
 
     NOT_NULL(Objects::nonNull),
 
     NOT_BLANK(Check::notBlank),
 
-    NOT_EMPTY(obj -> Check.notEmpty(obj, true)),
+    NOT_EMPTY(Check::notEmpty),
     ;
 
     final Function<Object, Boolean> expression;
@@ -29,6 +29,20 @@ public enum Check {
         return expression;
     }
 
+    private static boolean auto(Object obj) {
+        if (obj == null)    return false;
+        if (obj instanceof CharSequence) {
+            return StringUtils.isNotBlank((CharSequence) obj);
+        } else if (obj.getClass().isArray()) {
+            return Array.getLength(obj) > 0;
+        } else if (obj instanceof Collection) {
+            return ((Collection<?>) obj).size() > 0;
+        } else if (obj instanceof Map) {
+            return ((Map<?, ?>) obj).size() > 0;
+        }
+        return true;
+    }
+
     private static boolean notBlank(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof CharSequence)
@@ -36,7 +50,7 @@ public enum Check {
         throw new IllegalArgumentException("The argument should be of type CharSequence;");
     }
 
-    private static boolean notEmpty(Object obj, boolean elseThrowable) {
+    private static boolean notEmpty(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof CharSequence) {
             return ((CharSequence) obj).length() > 0;
@@ -47,9 +61,7 @@ public enum Check {
         } else if (obj instanceof Map) {
             return ((Map<?, ?>) obj).size() > 0;
         }
-        if (elseThrowable)
-            throw new IllegalArgumentException("The argument should be of type CharSequence, Array, Collection, or Map;");
-        return true;
+        throw new IllegalArgumentException("The argument should be of type CharSequence, Array, Collection, or Map;");
     }
 
 }

@@ -1,6 +1,8 @@
 package cn.doocom.mybatis.plus.ext.query.parser;
 
+import cn.doocom.mybatis.plus.ext.query.QueryColumnInfo;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.parser.impl.SimpleQueryFieldParser;
 
 import java.lang.reflect.Field;
@@ -20,6 +22,11 @@ public abstract class AbstractQueryClassParser implements QueryClassParser {
     @Override
     public QueryField parseField(Field field) {
         return queryFieldParser.parseField(field);
+    }
+
+    @Override
+    public QueryColumnInfo extract(QueryColumn queryColumn) {
+        return queryFieldParser.extract(queryColumn);
     }
 
 }

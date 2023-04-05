@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 public interface QueryWrapperParser extends QueryClassParser {
 
-    default <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass) {
-        return parse(obj, entityClass, false);
+    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass) {
+        return parseWrapper(obj, entityClass, false);
     }
 
-    <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, boolean includeSuperclass);
+    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeSuperclass);
 
 }
