@@ -1,15 +1,13 @@
 package cn.doocom.mybatis.plus.ext.query;
 
-import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
-
 import java.util.List;
 
 public class QueryClass {
 
     private Class<?> clazz;
-    private boolean includeSuperclass;
+    private boolean includeInheritedFields;
     private List<QueryField> queryFields;
-    private List<QueryGroup> queryGroups;
+    private List<QueryGroupInfo> queryGroupInfos;
 
     public Class<?> getClazz() {
         return clazz;
@@ -19,12 +17,12 @@ public class QueryClass {
         this.clazz = clazz;
     }
 
-    public boolean isIncludeSuperclass() {
-        return includeSuperclass;
+    public boolean isIncludeInheritedFields() {
+        return includeInheritedFields;
     }
 
-    public void setIncludeSuperclass(boolean includeSuperclass) {
-        this.includeSuperclass = includeSuperclass;
+    public void setIncludeInheritedFields(boolean includeInheritedFields) {
+        this.includeInheritedFields = includeInheritedFields;
     }
 
     public List<QueryField> getQueryFields() {
@@ -35,11 +33,12 @@ public class QueryClass {
         this.queryFields = queryFields;
     }
 
-    public List<QueryGroup> getQueryGroups() {
-        return queryGroups;
+    public List<QueryGroupInfo> getQueryGroupInfos() {
+        return queryGroupInfos;
     }
 
-    public void setQueryGroups(List<QueryGroup> queryGroups) {
-        this.queryGroups = queryGroups;
+    public void setQueryGroupInfos(List<QueryGroupInfo> queryGroupInfos) {
+        this.queryGroupInfos = queryGroupInfos;
     }
+
 }

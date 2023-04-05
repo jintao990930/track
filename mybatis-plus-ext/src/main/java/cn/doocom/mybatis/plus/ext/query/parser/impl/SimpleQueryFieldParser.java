@@ -3,12 +3,13 @@ package cn.doocom.mybatis.plus.ext.query.parser.impl;
 import cn.doocom.mybatis.plus.ext.query.QueryColumnInfo;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
-import cn.doocom.mybatis.plus.ext.query.parser.QueryFieldParser;
+import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryFieldParser;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SimpleQueryFieldParser implements QueryFieldParser {
+public class SimpleQueryFieldParser extends BaseQueryFieldParser {
 
     @Override
     public QueryField parseField(Field field) {
@@ -16,18 +17,11 @@ public class SimpleQueryFieldParser implements QueryFieldParser {
         field.setAccessible(true);
         result.setField(field);
         QueryColumn[] queryColumns = field.getDeclaredAnnotationsByType(QueryColumn.class);
-        result.setQueryColumns(Arrays.asList(queryColumns));
-        return result;
-    }
-
-    @Override
-    public QueryColumnInfo extract(QueryColumn queryColumn) {
-        QueryColumnInfo result = new QueryColumnInfo();
-        result.setOperation(queryColumn.value().getOperation());
-        result.setColumn(queryColumn.column());
-        result.setGroupId(queryColumn.groupId());
-        result.setLogic(queryColumn.logic());
-        result.setCheck(queryColumn.check().getExpression());
+        List<QueryColumnInfo> queryColumnInfos = new ArrayList<>(queryColumns.length);
+        for (QueryColumn queryColumn : queryColumns) {
+            queryColumnInfos.add(extract(queryColumn));
+        }
+        result.setQueryColumnInfos(queryColumnInfos);
         return result;
     }
 

@@ -8,6 +8,6 @@ public interface QueryWrapperParser extends QueryClassParser {
         return parseWrapper(obj, entityClass, false);
     }
 
-    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeSuperclass);
+    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields);
 
 }
