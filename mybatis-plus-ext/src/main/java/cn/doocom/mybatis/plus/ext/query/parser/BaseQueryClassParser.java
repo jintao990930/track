@@ -25,7 +25,7 @@ public abstract class BaseQueryClassParser implements QueryClassParser {
     }
 
     protected QueryGroupInfo extract(QueryGroup queryGroup) {
-        return new QueryGroupInfo(queryGroup.id(), queryGroup.logic());
+        return new QueryGroupInfo(queryGroup.id(), queryGroup.parentId(), queryGroup.logic());
     }
 
 }

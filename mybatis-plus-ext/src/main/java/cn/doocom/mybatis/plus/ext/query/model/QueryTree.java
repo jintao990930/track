@@ -10,48 +10,37 @@ import java.util.Map;
 
 public class QueryTree {
 
-    private Class<?> clazz;
-    private boolean includeInheritedFields;
-    private QueryNode root;
-    private Map<String, QueryNode> groupIdMapQueryNode;
+    private final Class<?> clazz;
+    private final boolean includeInheritedFields;
+    private final QueryNode root;
+    private final Map<String, QueryNode> groupIdMapQueryNode;
 
-    public static QueryTreeBuilder builder() {
-        return new QueryTreeBuilder();
+    public QueryTree(QueryClass queryClass) {
+        clazz = queryClass.getClazz();
+        includeInheritedFields = queryClass.isIncludeInheritedFields();
+        groupIdMapQueryNode = new HashMap<>(4);
+        root = buildTree(queryClass.getQueryGroupInfos(), queryClass.getQueryFields(), groupIdMapQueryNode);
     }
 
-    private QueryTree(Class<?> clazz, boolean includeInheritedFields,
-                      QueryNode root, Map<String, QueryNode> groupIdMapQueryNode) {
-        this.clazz = clazz;
-        this.includeInheritedFields = includeInheritedFields;
-        this.root = root;
-        this.groupIdMapQueryNode = groupIdMapQueryNode;
+    public Class<?> getClazz() {
+        return clazz;
     }
 
-    public static class QueryTreeBuilder {
+    public boolean isIncludeInheritedFields() {
+        return includeInheritedFields;
+    }
 
-        private Class<?> clazz;
-        private boolean includeInheritedFields;
-        private QueryNode root;
-        private Map<String, QueryNode> groupIdMapQueryNode;
+    public QueryNode getRoot() {
+        return root;
+    }
 
-        private QueryTreeBuilder() { }
+    public Map<String, QueryNode> getGroupIdMapQueryNode() {
+        return groupIdMapQueryNode;
+    }
 
-        public QueryTreeBuilder queryClass(QueryClass queryClass) {
-            clazz = queryClass.getClazz();
-            includeInheritedFields = queryClass.isIncludeInheritedFields();
-            groupIdMapQueryNode = new HashMap<>(4);
-            root = buildTree(queryClass.getQueryGroupInfos(), queryClass.getQueryFields(), groupIdMapQueryNode);
-            return this;
-        }
+    private QueryNode buildTree(List<QueryGroupInfo> groupInfos, List<QueryField> fields, Map<String, QueryNode> nodeMap) {
 
-        public QueryTree build() {
-            return new QueryTree(clazz, includeInheritedFields, root, groupIdMapQueryNode);
-        }
-
-        private QueryNode buildTree(List<QueryGroupInfo> groupInfos, List<QueryField> fields, Map<String, QueryNode> nodeMap) {
-            return null;
-        }
-
+        return root;
     }
 
 }
