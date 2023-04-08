@@ -6,13 +6,13 @@ import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 public abstract class BaseQueryFieldParser implements QueryFieldParser {
 
     protected QueryColumnInfo extract(QueryColumn queryColumn) {
-        QueryColumnInfo result = new QueryColumnInfo();
-        result.setOperation(queryColumn.value().getOperation());
-        result.setColumn(queryColumn.column());
-        result.setGroupId(queryColumn.groupId());
-        result.setLogic(queryColumn.logic());
-        result.setCheck(queryColumn.check().getExpression());
-        return result;
+        return QueryColumnInfo.builder()
+                .operation(queryColumn.value().getOperation())
+                .column(queryColumn.column())
+                .groupId(queryColumn.groupId())
+                .logic(queryColumn.logic())
+                .check(queryColumn.check().getExpression())
+                .build();
     }
 
 }

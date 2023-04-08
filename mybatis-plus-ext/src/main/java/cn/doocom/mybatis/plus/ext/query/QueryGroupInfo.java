@@ -2,25 +2,30 @@ package cn.doocom.mybatis.plus.ext.query;
 
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 
-public class QueryGroupInfo {
+import java.util.Objects;
 
-    private String id;
-    private Logic logic;
+public final class QueryGroupInfo {
+
+    private final String id;
+    private final Logic logic;
+
+    public QueryGroupInfo(String id) {
+        this(id, Logic.AND);
+    }
+
+    public QueryGroupInfo(String id, Logic logic) {
+        assert Objects.nonNull(id);
+        assert Objects.nonNull(logic);
+        this.id = id;
+        this.logic = logic;
+    }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Logic getLogic() {
         return logic;
-    }
-
-    public void setLogic(Logic logic) {
-        this.logic = logic;
     }
 
 }

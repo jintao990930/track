@@ -1,7 +1,5 @@
 package cn.doocom.util;
 
-import com.sun.istack.internal.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
@@ -28,7 +26,7 @@ public class AnnotationUtil {
     }
 
     private static void doGetAnnotatedFieldsIncludeSuperclass(Class<?> clz, Class<? extends Annotation> annotation,
-                                                              @Nullable Class<? extends Annotation> containerAnnotation,
+                                                              Class<? extends Annotation> containerAnnotation,
                                                               List<Field> result, boolean includeSuperclass) {
         Class<?> superclass;
         if (Object.class == clz || (superclass = clz.getSuperclass()) == null)

@@ -47,7 +47,7 @@ public enum Check {
         if (obj == null)    return false;
         if (obj instanceof CharSequence)
             return StringUtils.isNotBlank((CharSequence) obj);
-        throw new IllegalArgumentException("The argument should be of type CharSequence;");
+        throw new IllegalArgumentException("The argument should be of type CharSequence.");
     }
 
     private static boolean notEmpty(Object obj) {
@@ -61,7 +61,7 @@ public enum Check {
         } else if (obj instanceof Map) {
             return ((Map<?, ?>) obj).size() > 0;
         }
-        throw new IllegalArgumentException("The argument should be of type CharSequence, Array, Collection, or Map;");
+        throw new IllegalArgumentException("The argument should be of type CharSequence, Array, Collection, or Map.");
     }
 
 }
