@@ -4,7 +4,7 @@ import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 
-@QueryGroup(id = QueryConst.MAIN_GROUP_ID)
+@QueryGroup(id = QueryConst.DEFAULT_ROOT_GROUP_ID)
 public class DemoDTO {
 
     @QueryColumn

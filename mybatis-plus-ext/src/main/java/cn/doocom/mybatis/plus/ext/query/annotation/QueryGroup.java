@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 public @interface QueryGroup {
 
     String id();
-    String parentId() default QueryConst.MAIN_GROUP_ID;
+    String parentId() default QueryConst.DEFAULT_ROOT_GROUP_ID;
     Logic logic() default Logic.AND;
 
 }

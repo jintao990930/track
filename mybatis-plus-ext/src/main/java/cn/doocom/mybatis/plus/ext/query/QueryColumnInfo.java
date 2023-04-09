@@ -67,38 +67,38 @@ public final class QueryColumnInfo {
         public QueryColumnInfo build() {
             operation = ObjectUtil.getOr(operation, Operator.EQ.getOperation());
             column = ObjectUtil.getOr(column, QueryConst.HUMP_2_UNDER_LINE_FLAG);
-            groupId = ObjectUtil.getOr(groupId, QueryConst.MAIN_GROUP_ID);
+            groupId = ObjectUtil.getOr(groupId, QueryConst.DEFAULT_ROOT_GROUP_ID);
             logic = ObjectUtil.getOr(logic, Logic.AND);
             check = ObjectUtil.getOr(check, Check.AUTO.getExpression());
             return new QueryColumnInfo(operation, column, groupId, logic, check);
         }
 
         public QueryColumnInfoBuilder operation(BaseOperation operation) {
-            assert Objects.nonNull(operation);
+            Objects.requireNonNull(operation);
             this.operation = operation;
             return this;
         }
 
         public QueryColumnInfoBuilder column(String column) {
-            assert Objects.nonNull(column);
+            Objects.requireNonNull(column);
             this.column = column;
             return this;
         }
 
         public QueryColumnInfoBuilder groupId(String groupId) {
-            assert Objects.nonNull(groupId);
+            Objects.requireNonNull(groupId);
             this.groupId = groupId;
             return this;
         }
 
         public QueryColumnInfoBuilder logic(Logic logic) {
-            assert Objects.nonNull(logic);
+            Objects.requireNonNull(logic);
             this.logic = logic;
             return this;
         }
 
         public QueryColumnInfoBuilder check(Function<Object, Boolean> check) {
-            assert Objects.nonNull(check);
+            Objects.requireNonNull(check);
             this.check = check;
             return this;
         }

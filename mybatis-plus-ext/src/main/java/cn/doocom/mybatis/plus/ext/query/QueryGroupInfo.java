@@ -12,7 +12,7 @@ public final class QueryGroupInfo {
     private final Logic logic;
 
     public QueryGroupInfo(String id) {
-        this(id, QueryConst.MAIN_GROUP_ID, Logic.AND);
+        this(id, QueryConst.DEFAULT_ROOT_GROUP_ID, Logic.AND);
     }
 
     public QueryGroupInfo(String id, String parentId) {
@@ -20,13 +20,13 @@ public final class QueryGroupInfo {
     }
 
     public QueryGroupInfo(String id, Logic logic) {
-        this(id, QueryConst.MAIN_GROUP_ID, logic);
+        this(id, QueryConst.DEFAULT_ROOT_GROUP_ID, logic);
     }
 
     public QueryGroupInfo(String id, String parentId, Logic logic) {
-        assert Objects.nonNull(id);
-        assert Objects.nonNull(parentId);
-        assert Objects.nonNull(logic);
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(parentId);
+        Objects.requireNonNull(logic);
         this.id = id;
         this.parentId = parentId;
         this.logic = logic;
