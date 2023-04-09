@@ -1,9 +1,10 @@
 package cn.doocom.mybatis.plus.ext.query.parser.impl;
 
+import cn.doocom.mybatis.plus.ext.query.QueryClass;
+import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryWrapperParser;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 public class SimpleQueryWrapperParser extends BaseQueryWrapperParser {
 
@@ -17,9 +18,9 @@ public class SimpleQueryWrapperParser extends BaseQueryWrapperParser {
 
     @Override
     public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields) {
-        QueryWrapper<T> result = Wrappers.query();
-
-        return result;
+        QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
+        QueryTree queryTree = new QueryTree(queryClass);
+        return parse(obj, entityClass, queryTree);
     }
 
 }

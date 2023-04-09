@@ -1,37 +1,22 @@
 package cn.doocom.mybatis.plus.ext.query.parser.impl;
 
-import cn.doocom.mybatis.plus.ext.query.QueryClass;
-import cn.doocom.mybatis.plus.ext.query.QueryField;
-import cn.doocom.mybatis.plus.ext.query.parser.QueryWrapperParser;
+import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryWrapperParser;
+import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
-import java.lang.reflect.Field;
-
-public class CacheQueryWrapperParser implements QueryWrapperParser {
-
-    private final QueryWrapperParser queryWrapperParser;
+public class CacheQueryWrapperParser extends BaseQueryWrapperParser {
 
     public CacheQueryWrapperParser() {
-        this(new SimpleQueryWrapperParser());
+        super();
     }
 
-    public CacheQueryWrapperParser(QueryWrapperParser queryWrapperParser) {
-        this.queryWrapperParser = queryWrapperParser;
+    public CacheQueryWrapperParser(QueryClassParser queryClassParser) {
+        super(queryClassParser);
     }
 
     @Override
     public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields) {
         return null;
-    }
-
-    @Override
-    public QueryClass parseClass(Class<?> clz, boolean includeInheritedFields) {
-        return queryWrapperParser.parseClass(clz, includeInheritedFields);
-    }
-
-    @Override
-    public QueryField parseField(Field field) {
-        return queryWrapperParser.parseField(field);
     }
 
 }
