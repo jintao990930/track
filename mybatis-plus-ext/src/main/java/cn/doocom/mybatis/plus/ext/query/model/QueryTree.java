@@ -1,12 +1,13 @@
 package cn.doocom.mybatis.plus.ext.query.model;
 
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
-import cn.doocom.mybatis.plus.ext.query.QueryColumnInfo;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
-import cn.doocom.mybatis.plus.ext.query.QueryGroupInfo;
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class QueryTree {
@@ -17,11 +18,10 @@ public class QueryTree {
     private final Map<String, QueryNode> groupIdMapQueryNode;
 
     public QueryTree(QueryClass queryClass) {
-        Objects.requireNonNull(queryClass);
         clazz = queryClass.getClazz();
         includeInheritedFields = queryClass.isIncludeInheritedFields();
         groupIdMapQueryNode = new HashMap<>(4);
-        root = buildTree(queryClass.getQueryGroupInfos(), queryClass.getQueryFields());
+        root = buildTree(queryClass.getQueryGroups(), queryClass.getQueryFields());
     }
 
     public Class<?> getClazz() {
@@ -40,47 +40,46 @@ public class QueryTree {
         return groupIdMapQueryNode;
     }
 
-    private QueryNode buildTree(List<QueryGroupInfo> groupInfos, List<QueryField> fields) {
-        QueryGroupInfo rootGroupInfo = new QueryGroupInfo(QueryConst.DEFAULT_ROOT_GROUP_ID);
-        QueryNode root = new QueryNode(rootGroupInfo);
-        groupIdMapQueryNode.put(rootGroupInfo.getId(), root);
-        for (QueryGroupInfo groupInfo : groupInfos) {
+    private QueryNode buildTree(QueryGroup[] groups, List<QueryField> fields) {
+        QueryNode root = new QueryNode(QueryConst.DEFAULT_ROOT_GROUP_ID);
+        groupIdMapQueryNode.put(QueryConst.DEFAULT_ROOT_GROUP_ID, root);
+        for (QueryGroup g : groups) {
             // dump ROOT QueryGroupInfo
-            if (Objects.equals(groupInfo.getId(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
+            if (Objects.equals(g.id(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
                 continue;
             }
-            if (Objects.equals(groupInfo.getId(), groupInfo.getParentId())) {
+            if (Objects.equals(g.id(), g.parentId())) {
                 throw new RuntimeException("The parent of QueryGroupInfo can't be itself.");
             }
-            QueryNode node = new QueryNode(groupInfo);
+            QueryNode node = new QueryNode(g.id(), g.logic());
             // the latter covers the former
-            groupIdMapQueryNode.put(groupInfo.getId(), node);
+            groupIdMapQueryNode.put(g.id(), node);
         }
+        // set parent node
         groupIdMapQueryNode.values().forEach(node -> {
-            QueryNode parentNode = groupIdMapQueryNode.get(node.getGroupInfo().getParentId());
+            QueryNode parentNode = groupIdMapQueryNode.get(node.getParent().getGroupId());
             if (Objects.isNull(parentNode)) {
-                QueryGroupInfo newGroupInfo = new QueryGroupInfo(node.getGroupInfo().getParentId(), QueryConst.DEFAULT_ROOT_GROUP_ID);
-                parentNode = new QueryNode(newGroupInfo, root);
+                parentNode = new QueryNode(node.getParent().getGroupId(), root);
             }
             node.setParent(parentNode);
             parentNode.addChild(node);
-            groupIdMapQueryNode.putIfAbsent(parentNode.getGroupInfo().getId(), parentNode);
+            groupIdMapQueryNode.putIfAbsent(parentNode.getGroupId(), parentNode);
         });
         checkRingExists(root);
         for (QueryField field : fields) {
-            Map<String, List<QueryColumnInfo>> map = field.getQueryColumnInfos().stream()
-                    .collect(Collectors.groupingBy(QueryColumnInfo::getGroupId,
-                            Collectors.toList()));
-            map.forEach((id, columnInfos) -> {
-                QueryNode node = groupIdMapQueryNode.get(id);
+            Map<String, Map<Function<Object, Boolean>, List<WhereBlock>>> outerMap = Arrays.stream(field.getQueryColumns())
+                    .collect(Collectors.groupingBy(QueryColumn::groupId,
+                            Collectors.groupingBy(column -> column.check().getExpression(),
+                                    Collectors.mapping(this::convert, Collectors.toList()))));
+            outerMap.forEach((groupId, innerMap) -> {
+                QueryNode node = groupIdMapQueryNode.get(groupId);
                 if (Objects.isNull(node)) {
-                    QueryGroupInfo newGroupInfo = new QueryGroupInfo(id, QueryConst.DEFAULT_ROOT_GROUP_ID);
-                    node = new QueryNode(newGroupInfo, root);
+                    node = new QueryNode(groupId, root);
                 }
-                groupIdMapQueryNode.putIfAbsent(id, node);
-                List<QueryColumnInfo> columnInfoList = node.getColumnInfoMap().getOrDefault(field.getField(), new ArrayList<>());
-                columnInfoList.addAll(columnInfos);
-                node.getColumnInfoMap().putIfAbsent(field.getField(), columnInfoList);
+                groupIdMapQueryNode.putIfAbsent(groupId, node);
+                Map<Function<Object, Boolean>, List<WhereBlock>> blocksMap = node.getWhereBlocksMap().getOrDefault(field.getField(), new HashMap<>());
+                blocksMap.putAll(innerMap);
+                node.getWhereBlocksMap().putIfAbsent(field.getField(), blocksMap);
             });
         }
         return root;
@@ -93,13 +92,20 @@ public class QueryTree {
         open.add(root);
         while (!open.isEmpty()) {
             QueryNode first = open.remove(0);
-            if (!close.add(first.getGroupInfo().getId())) {
-                throw new RuntimeException("There is a ring exists when building for QueryClass {" + clazz.getName() + "}." +
-                        " QueryGroupInfo#id are {" + first.getGroupInfo().getId()
-                        + "} and {" + first.getGroupInfo().getParentId() + "}.");
+            if (!close.add(first.getGroupId())) {
+                throw new RuntimeException("There is a ring exists when building QueryTree for Class {" + clazz.getName() + "}." +
+                        " GroupId are {" + first.getGroupId()
+                        + "} and {" + first.getParent().getGroupId() + "}.");
             }
             open.addAll(first.getChildren());
         }
+    }
+
+    private WhereBlock convert(QueryColumn queryColumn) {
+        return new WhereBlock(queryColumn.value().getOperation(),
+                queryColumn.value().getType(),
+                queryColumn.column(),
+                queryColumn.logic());
     }
 
 }

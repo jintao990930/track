@@ -1,4 +1,6 @@
-package cn.doocom.util;
+package cn.doocom.common.util;
+
+import cn.doocom.common.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Repeatable;
@@ -18,6 +20,7 @@ public class AnnotationUtil {
         return result;
     }
 
+    @Nullable
     public static Class<? extends Annotation> getContainerAnnotation(Class<? extends Annotation> annotation) {
         if (annotation.isAnnotationPresent(Repeatable.class)) {
             return annotation.getAnnotation(Repeatable.class).value();
@@ -26,13 +29,16 @@ public class AnnotationUtil {
     }
 
     private static void doGetAnnotatedFieldsIncludeSuperclass(Class<?> clz, Class<? extends Annotation> annotation,
+                                                              @Nullable
                                                               Class<? extends Annotation> containerAnnotation,
                                                               List<Field> result, boolean includeSuperclass) {
         Class<?> superclass;
-        if (Object.class == clz || (superclass = clz.getSuperclass()) == null)
-            return ;
-        if (includeSuperclass) 
+        if (Object.class == clz || (superclass = clz.getSuperclass()) == null) {
+            return;
+        }
+        if (includeSuperclass) {
             doGetAnnotatedFieldsIncludeSuperclass(superclass, annotation, containerAnnotation, result, true);
+        }
         Field[] declaredFields = clz.getDeclaredFields();
         for (Field field : declaredFields) {
             if (field.isAnnotationPresent(annotation)) {

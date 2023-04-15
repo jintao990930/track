@@ -1,12 +1,13 @@
 package cn.doocom.mybatis.plus.ext.query;
 
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
+
 import java.lang.reflect.Field;
-import java.util.List;
 
 public class QueryField {
 
     private Field field;
-    private List<QueryColumnInfo> queryColumnInfos;
+    private QueryColumn[] queryColumns;
 
     public QueryField() { }
 
@@ -18,12 +19,12 @@ public class QueryField {
         this.field = field;
     }
 
-    public List<QueryColumnInfo> getQueryColumnInfos() {
-        return queryColumnInfos;
+    public QueryColumn[] getQueryColumns() {
+        return queryColumns;
     }
 
-    public void setQueryColumnInfos(List<QueryColumnInfo> queryColumnInfos) {
-        this.queryColumnInfos = queryColumnInfos;
+    public void setQueryColumns(QueryColumn[] queryColumns) {
+        this.queryColumns = queryColumns;
     }
 
 }

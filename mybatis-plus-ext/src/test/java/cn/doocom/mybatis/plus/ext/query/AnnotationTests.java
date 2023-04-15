@@ -2,14 +2,11 @@ package cn.doocom.mybatis.plus.ext.query;
 
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.pojo.DemoDTO;
-import cn.doocom.util.AnnotationUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import org.junit.Test;
 
-import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class AnnotationTests {
