@@ -1,45 +1,55 @@
 package cn.doocom.mybatis.plus.ext.query.model;
 
-import cn.doocom.mybatis.plus.ext.query.QueryColumnInfo;
-import cn.doocom.mybatis.plus.ext.query.QueryGroupInfo;
+import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Function;
 
 public class QueryNode {
 
-    private QueryGroupInfo groupInfo;
-    private Map<Field, List<QueryColumnInfo>> columnInfoMap;
+    private String groupId;
+    private Logic outerLogic;
+    private Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
     private QueryNode parent;
     private List<QueryNode> children;
 
-    QueryNode(QueryGroupInfo groupInfo) {
-        this(groupInfo, null);
+    QueryNode(String groupId) {
+        this(groupId, Logic.AND);
     }
 
-    QueryNode(QueryGroupInfo groupInfo, QueryNode parent) {
-        this.groupInfo = groupInfo;
-        columnInfoMap = new HashMap<>();
-        this.parent = parent;
-        if (Objects.nonNull(parent))
-            this.parent.addChild(this);
+    QueryNode(String groupId, Logic outerLogic) {
+        this(groupId, outerLogic, null);
+    }
+
+    QueryNode(String groupId, QueryNode parent) {
+        this(groupId, Logic.AND, parent);
+    }
+
+    QueryNode(String groupId, Logic outerLogic, QueryNode parent) {
+        this.groupId = groupId;
+        this.outerLogic = outerLogic;
+        this.whereBlocksMap = new HashMap<>();
+        setParent(parent);
+        if (Objects.nonNull(parent)) {
+            parent.addChild(this);
+        }
         children = new ArrayList<>();
     }
 
-    public QueryGroupInfo getGroupInfo() {
-        return groupInfo;
+    String getGroupId() {
+        return groupId;
     }
 
-    public Map<Field, List<QueryColumnInfo>> getColumnInfoMap() {
-        return columnInfoMap;
+    public Logic getOuterLogic() {
+        return outerLogic;
     }
 
-    void setParent(QueryNode parent) {
-        Objects.requireNonNull(parent);
-        this.parent = parent;
+    public Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> getWhereBlocksMap() {
+        return whereBlocksMap;
     }
 
-    public QueryNode getParent() {
+    QueryNode getParent() {
         return parent;
     }
 
@@ -47,9 +57,12 @@ public class QueryNode {
         return children;
     }
 
+    public void setParent(QueryNode parent) {
+        this.parent = parent;
+    }
+
     public void addChild(QueryNode child) {
-        Objects.requireNonNull(child);
-        children.add(child);
+        this.children.add(child);
     }
 
 }
