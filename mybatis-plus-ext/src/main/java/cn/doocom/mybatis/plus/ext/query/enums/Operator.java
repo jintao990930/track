@@ -2,25 +2,28 @@ package cn.doocom.mybatis.plus.ext.query.enums;
 
 import cn.doocom.mybatis.plus.ext.query.function.BaseOperation;
 import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
+import cn.doocom.mybatis.plus.ext.query.function.UnaryOperation;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Compare;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 
 public enum Operator {
 
-    EQ(Type.UNARY, ((wrapper, column, value) -> wrapper.eq(column, value))),
-    NE(Type.UNARY, (wrapper, column, value) -> wrapper.ne(column, value)),
-    GT(Type.UNARY, (wrapper, column, value) -> wrapper.gt(column, value)),
-    GE(Type.UNARY, (wrapper, column, value) -> wrapper.ge(column, value)),
-    LT(Type.UNARY, (wrapper, column, value) -> wrapper.lt(column, value)),
-    LE(Type.UNARY, (wrapper, column, value) -> wrapper.le(column, value)),
-    LIKE(Type.UNARY, (wrapper, column, value) -> wrapper.like(column, value)),
-    NOT_LIKE(Type.UNARY, (wrapper, column, value) -> wrapper.notLike(column, value)),
-    LIKE_LEFT(Type.UNARY, (wrapper, column, value) -> wrapper.likeLeft(column, value)),
-    LIKE_RIGHT(Type.UNARY, (wrapper, column, value) -> wrapper.likeRight(column, value)),
+    EQ(Type.UNARY, (UnaryOperation) Compare::eq),
+    NE(Type.UNARY, (UnaryOperation) Compare::ne),
+    GT(Type.UNARY, (UnaryOperation) Compare::gt),
+    GE(Type.UNARY, (UnaryOperation) Compare::ge),
+    LT(Type.UNARY, (UnaryOperation) Compare::lt),
+    LE(Type.UNARY, (UnaryOperation) Compare::le),
+    LIKE(Type.UNARY, (UnaryOperation) Compare::like),
+    NOT_LIKE(Type.UNARY, (UnaryOperation) Compare::notLike),
+    LIKE_LEFT(Type.UNARY, (UnaryOperation) Compare::likeLeft),
+    LIKE_RIGHT(Type.UNARY, (UnaryOperation) Compare::likeRight),
 
-    BETWEEN(Type.BINARY, (BinaryOperation) (wrapper, column, value1, value2) -> wrapper.between(column, value1, value2)),
-    NOT_BETWEEN(Type.BINARY, (BinaryOperation) (wrapper, column, value1, value2) -> wrapper.notBetween(column, value1, value2)),
+    BETWEEN(Type.BINARY, (BinaryOperation) Compare::between),
+    NOT_BETWEEN(Type.BINARY, (BinaryOperation) Compare::notBetween),
 
-    IN(Type.MULTI, (wrapper, column, values) -> wrapper.in(column, values)),
-    NOT_IN(Type.MULTI, (wrapper, column, values) -> wrapper.notIn(column, values)),
+    IN(Type.MULTI, Func::in),
+    NOT_IN(Type.MULTI, Func::notIn),
     ;
     
     final BaseOperation operation;
