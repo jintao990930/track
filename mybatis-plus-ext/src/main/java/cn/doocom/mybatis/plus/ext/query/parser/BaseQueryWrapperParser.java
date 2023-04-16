@@ -46,6 +46,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
         doParse(obj, root, result);
+        binaryValueThreadLocal.remove();
         return result;
     }
 
