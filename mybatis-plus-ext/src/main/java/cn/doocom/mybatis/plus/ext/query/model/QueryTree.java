@@ -43,8 +43,9 @@ public class QueryTree {
     private QueryNode buildTree(QueryGroup[] groups, List<QueryField> fields) {
         QueryNode root = new QueryNode(QueryConst.DEFAULT_ROOT_GROUP_ID);
         groupIdMapQueryNode.put(QueryConst.DEFAULT_ROOT_GROUP_ID, root);
+        Map<String, String> id2ParentIdMap = new HashMap<>();
         for (QueryGroup g : groups) {
-            // dump ROOT QueryGroupInfo
+            // skip ROOT_GROUP_ID
             if (Objects.equals(g.id(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
                 continue;
             }
@@ -54,16 +55,22 @@ public class QueryTree {
             QueryNode node = new QueryNode(g.id(), g.logic());
             // the latter covers the former
             groupIdMapQueryNode.put(g.id(), node);
+            id2ParentIdMap.put(g.id(), g.parentId());
         }
         // set parent node
         groupIdMapQueryNode.values().forEach(node -> {
-            QueryNode parentNode = groupIdMapQueryNode.get(node.getParent().getGroupId());
+            // skip ROOT QueryNode
+            if (Objects.equals(node.getGroupId(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
+                return ;
+            }
+            String parentGroupId = id2ParentIdMap.get(node.getGroupId());
+            QueryNode parentNode = groupIdMapQueryNode.get(parentGroupId);
             if (Objects.isNull(parentNode)) {
-                parentNode = new QueryNode(node.getParent().getGroupId(), root);
+                parentNode = new QueryNode(parentGroupId, root);
             }
             node.setParent(parentNode);
             parentNode.addChild(node);
-            groupIdMapQueryNode.putIfAbsent(parentNode.getGroupId(), parentNode);
+            groupIdMapQueryNode.putIfAbsent(parentGroupId, parentNode);
         });
         checkRingExists(root);
         for (QueryField field : fields) {
