@@ -1,5 +1,6 @@
 package cn.doocom.mybatis.plus.ext.query.model;
 
+import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.enums.Operator;
 import cn.doocom.mybatis.plus.ext.query.function.BaseOperation;
@@ -17,6 +18,13 @@ public class WhereBlock {
         this.operatorType = operatorType;
         this.column = column;
         this.innerLogic = innerLogic;
+    }
+
+    public static WhereBlock convert(QueryColumn queryColumn) {
+        return new WhereBlock(queryColumn.value().getOperation(),
+                queryColumn.value().getType(),
+                queryColumn.column(),
+                queryColumn.logic());
     }
 
     public BaseOperation getOperation() {

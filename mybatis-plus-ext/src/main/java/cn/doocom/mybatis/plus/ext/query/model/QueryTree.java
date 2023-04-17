@@ -77,7 +77,7 @@ public class QueryTree {
             Map<String, Map<Function<Object, Boolean>, List<WhereBlock>>> outerMap = Arrays.stream(field.getQueryColumns())
                     .collect(Collectors.groupingBy(QueryColumn::groupId,
                             Collectors.groupingBy(column -> column.check().getExpression(),
-                                    Collectors.mapping(this::convert, Collectors.toList()))));
+                                    Collectors.mapping(WhereBlock::convert, Collectors.toList()))));
             outerMap.forEach((groupId, innerMap) -> {
                 QueryNode node = groupIdMapQueryNode.get(groupId);
                 if (Objects.isNull(node)) {
@@ -106,13 +106,6 @@ public class QueryTree {
             }
             open.addAll(first.getChildren());
         }
-    }
-
-    private WhereBlock convert(QueryColumn queryColumn) {
-        return new WhereBlock(queryColumn.value().getOperation(),
-                queryColumn.value().getType(),
-                queryColumn.column(),
-                queryColumn.logic());
     }
 
 }
