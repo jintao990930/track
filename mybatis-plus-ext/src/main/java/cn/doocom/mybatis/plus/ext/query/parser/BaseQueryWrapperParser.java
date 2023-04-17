@@ -91,7 +91,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                 if (Objects.equals(child.getOuterLogic(), Logic.AND)) {
                     wrapper.and(w -> doParse(obj, child, w));
                 } else if (Objects.equals(child.getOuterLogic(), Logic.OR)) {
-                    wrapper.and(w -> doParse(obj, child, w));
+                    wrapper.or(w -> doParse(obj, child, w));
                 }
             });
         }

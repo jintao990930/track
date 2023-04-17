@@ -1,10 +1,4 @@
-1. 支持嵌套group解析
-2. column支持多值，以逗号隔开
-3. 互斥 if - else 
-
-
-
-
-
-1. 注解调整
-2. QueryWrapperDefinition 缓存
+1. 支持嵌套group解析    - 已实现
+2. column支持多值，以逗号隔开    - 已实现
+3. group 可实现分组互斥的效果    
+4. QueryTree 的构建应该可扩展
