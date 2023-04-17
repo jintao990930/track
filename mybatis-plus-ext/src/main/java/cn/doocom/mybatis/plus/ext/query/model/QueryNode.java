@@ -8,25 +8,25 @@ import java.util.function.Function;
 
 public class QueryNode {
 
-    private String groupId;
-    private Logic outerLogic;
-    private Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
+    private final String groupId;
+    private final Logic outerLogic;
+    private final Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
     private QueryNode parent;
-    private List<QueryNode> children;
+    private final List<QueryNode> children;
 
-    QueryNode(String groupId) {
+    public QueryNode(String groupId) {
         this(groupId, Logic.AND);
     }
 
-    QueryNode(String groupId, Logic outerLogic) {
+    public QueryNode(String groupId, Logic outerLogic) {
         this(groupId, outerLogic, null);
     }
 
-    QueryNode(String groupId, QueryNode parent) {
+    public QueryNode(String groupId, QueryNode parent) {
         this(groupId, Logic.AND, parent);
     }
 
-    QueryNode(String groupId, Logic outerLogic, QueryNode parent) {
+    public QueryNode(String groupId, Logic outerLogic, QueryNode parent) {
         this.groupId = groupId;
         this.outerLogic = outerLogic;
         this.whereBlocksMap = new HashMap<>();
@@ -37,7 +37,7 @@ public class QueryNode {
         children = new ArrayList<>();
     }
 
-    String getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
@@ -49,7 +49,7 @@ public class QueryNode {
         return whereBlocksMap;
     }
 
-    QueryNode getParent() {
+    public QueryNode getParent() {
         return parent;
     }
 

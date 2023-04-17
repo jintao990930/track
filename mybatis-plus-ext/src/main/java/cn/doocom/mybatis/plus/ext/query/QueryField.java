@@ -6,25 +6,20 @@ import java.lang.reflect.Field;
 
 public class QueryField {
 
-    private Field field;
-    private QueryColumn[] queryColumns;
+    private final Field field;
+    private final QueryColumn[] queryColumns;
 
-    public QueryField() { }
+    public QueryField(Field field, QueryColumn[] queryColumns) {
+        this.field = field;
+        this.queryColumns = queryColumns;
+    }
 
     public Field getField() {
         return field;
     }
 
-    public void setField(Field field) {
-        this.field = field;
-    }
-
     public QueryColumn[] getQueryColumns() {
         return queryColumns;
-    }
-
-    public void setQueryColumns(QueryColumn[] queryColumns) {
-        this.queryColumns = queryColumns;
     }
 
 }

@@ -6,41 +6,33 @@ import java.util.List;
 
 public class QueryClass {
 
-    private Class<?> clazz;
-    private boolean includeInheritedFields;
-    private List<QueryField> queryFields;
-    private QueryGroup[] queryGroups;
+    private final Class<?> clazz;
+    private final boolean includeInheritedFields;
+    private final List<QueryField> queryFields;
+    private final QueryGroup[] queryGroups;
+
+    public QueryClass(Class<?> clazz, boolean includeInheritedFields,
+                      List<QueryField> queryFields, QueryGroup[] queryGroups) {
+        this.clazz = clazz;
+        this.includeInheritedFields = includeInheritedFields;
+        this.queryFields = queryFields;
+        this.queryGroups = queryGroups;
+    }
 
     public Class<?> getClazz() {
         return clazz;
-    }
-
-    public void setClazz(Class<?> clazz) {
-        this.clazz = clazz;
     }
 
     public boolean isIncludeInheritedFields() {
         return includeInheritedFields;
     }
 
-    public void setIncludeInheritedFields(boolean includeInheritedFields) {
-        this.includeInheritedFields = includeInheritedFields;
-    }
-
     public List<QueryField> getQueryFields() {
         return queryFields;
     }
 
-    public void setQueryFields(List<QueryField> queryFields) {
-        this.queryFields = queryFields;
-    }
-
     public QueryGroup[] getQueryGroups() {
         return queryGroups;
-    }
-
-    public void setQueryGroups(QueryGroup[] queryGroups) {
-        this.queryGroups = queryGroups;
     }
 
 }

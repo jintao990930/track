@@ -30,7 +30,7 @@ public class CacheQueryWrapperParser extends BaseQueryWrapperParser {
         return parse(obj, entityClass, queryTree);
     }
 
-    private String generateCacheKey(Class<?> clz, boolean includeInheritedFields) {
+    protected String generateCacheKey(Class<?> clz, boolean includeInheritedFields) {
         String className = clz.getName();
         if (includeInheritedFields) {
             return className + "#includeInheritedFields";

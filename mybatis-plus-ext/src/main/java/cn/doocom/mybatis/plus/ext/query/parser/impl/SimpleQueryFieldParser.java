@@ -10,12 +10,9 @@ public class SimpleQueryFieldParser implements QueryFieldParser {
 
     @Override
     public QueryField parseField(Field field) {
-        QueryField result = new QueryField();
         field.setAccessible(true);
-        result.setField(field);
         QueryColumn[] queryColumns = field.getDeclaredAnnotationsByType(QueryColumn.class);
-        result.setQueryColumns(queryColumns);
-        return result;
+        return new QueryField(field, queryColumns);
     }
 
 }
