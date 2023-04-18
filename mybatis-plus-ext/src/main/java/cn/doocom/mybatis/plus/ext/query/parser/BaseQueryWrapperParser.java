@@ -44,13 +44,16 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
     protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree) {
         QueryWrapper<T> result = Wrappers.query();
+        // 扩展点1
         QueryNode root = tree.getRoot();
         doParse(obj, root, result);
         binaryValueThreadLocal.remove();
+        // 扩展点4
         return result;
     }
 
     private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper) {
+        // 扩展点2
         node.getWhereBlocksMap().forEach(((field, functionListMap) -> {
             functionListMap.forEach(((function, whereBlocks) -> {
                 try {
@@ -95,6 +98,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                 }
             });
         }
+        // 扩展点3
     }
 
 }
