@@ -29,7 +29,7 @@ public class QueryNode {
     public QueryNode(String groupId, Logic outerLogic, QueryNode parent) {
         this.groupId = groupId;
         this.outerLogic = outerLogic;
-        this.whereBlocksMap = new HashMap<>();
+        this.whereBlocksMap = new LinkedHashMap<>();
         setParent(parent);
         if (Objects.nonNull(parent)) {
             parent.addChild(this);

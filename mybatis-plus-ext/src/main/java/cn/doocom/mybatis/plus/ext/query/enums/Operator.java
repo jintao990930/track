@@ -8,44 +8,32 @@ import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 
 public enum Operator {
 
-    EQ(Type.UNARY, (UnaryOperation) Compare::eq),
-    NE(Type.UNARY, (UnaryOperation) Compare::ne),
-    GT(Type.UNARY, (UnaryOperation) Compare::gt),
-    GE(Type.UNARY, (UnaryOperation) Compare::ge),
-    LT(Type.UNARY, (UnaryOperation) Compare::lt),
-    LE(Type.UNARY, (UnaryOperation) Compare::le),
-    LIKE(Type.UNARY, (UnaryOperation) Compare::like),
-    NOT_LIKE(Type.UNARY, (UnaryOperation) Compare::notLike),
-    LIKE_LEFT(Type.UNARY, (UnaryOperation) Compare::likeLeft),
-    LIKE_RIGHT(Type.UNARY, (UnaryOperation) Compare::likeRight),
+    EQ((UnaryOperation) Compare::eq),
+    NE((UnaryOperation) Compare::ne),
+    GT((UnaryOperation) Compare::gt),
+    GE((UnaryOperation) Compare::ge),
+    LT((UnaryOperation) Compare::lt),
+    LE((UnaryOperation) Compare::le),
+    LIKE((UnaryOperation) Compare::like),
+    NOT_LIKE((UnaryOperation) Compare::notLike),
+    LIKE_LEFT((UnaryOperation) Compare::likeLeft),
+    LIKE_RIGHT((UnaryOperation) Compare::likeRight),
 
-    BETWEEN(Type.BINARY, (BinaryOperation) Compare::between),
-    NOT_BETWEEN(Type.BINARY, (BinaryOperation) Compare::notBetween),
+    BETWEEN((BinaryOperation) Compare::between),
+    NOT_BETWEEN((BinaryOperation) Compare::notBetween),
 
-    IN(Type.MULTI, Func::in),
-    NOT_IN(Type.MULTI, Func::notIn),
+    IN(Func::in),
+    NOT_IN(Func::notIn),
     ;
     
     final BaseOperation operation;
-    final Type type;
 
-    Operator(Type type, BaseOperation operation) {
-        this.type = type;
+    Operator(BaseOperation operation) {
         this.operation = operation;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public BaseOperation getOperation() {
         return operation;
-    }
-
-    public enum Type {
-        UNARY,
-        BINARY,
-        MULTI,
     }
 
 }

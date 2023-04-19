@@ -4,7 +4,7 @@ import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
-import cn.doocom.mybatis.plus.ext.query.enums.Operator;
+import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
 import cn.doocom.mybatis.plus.ext.query.model.QueryNode;
 import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.impl.SimpleQueryClassParser;
@@ -22,7 +22,7 @@ import java.util.Objects;
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
     protected final QueryClassParser queryClassParser;
-    protected ThreadLocal<Map<Class<?>, Object>> binaryValueThreadLocal = ThreadLocal.withInitial(() -> new HashMap<>(8));
+    protected ThreadLocal<Map<String, Object>> binaryValueThreadLocal = ThreadLocal.withInitial(() -> new HashMap<>(8));
 
     public BaseQueryWrapperParser() {
         this(new SimpleQueryClassParser());
@@ -44,16 +44,13 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
     protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree) {
         QueryWrapper<T> result = Wrappers.query();
-        // 扩展点1
         QueryNode root = tree.getRoot();
         doParse(obj, root, result);
         binaryValueThreadLocal.remove();
-        // 扩展点4
         return result;
     }
 
     private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper) {
-        // 扩展点2
         node.getWhereBlocksMap().forEach(((field, functionListMap) -> {
             functionListMap.forEach(((function, whereBlocks) -> {
                 try {
@@ -69,15 +66,14 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                         if (Objects.equals(block.getInnerLogic(), Logic.OR)) {
                             wrapper.or();
                         }
-                        if (Objects.equals(block.getOperatorType(), Operator.Type.BINARY)) {
-                            Map<Class<?>, Object> binaryValueMap = binaryValueThreadLocal.get();
-                            Class<?> type = field.getType();
-                            Object anotherValue = binaryValueMap.get(type);
+                        if (block.getOperation() instanceof BinaryOperation) {
+                            Map<String, Object> binaryValueMap = binaryValueThreadLocal.get();
+                            Object anotherValue = binaryValueMap.get(column);
                             if (Objects.isNull(anotherValue)) {
-                                binaryValueMap.put(type, value);
+                                binaryValueMap.put(column, value);
                             } else {
                                 block.getOperation().accept(wrapper, column, anotherValue, value);
-                                binaryValueMap.remove(type);
+                                binaryValueMap.remove(column);
                             }
                         } else {
                             block.getOperation().accept(wrapper, column, value);
@@ -98,7 +94,6 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                 }
             });
         }
-        // 扩展点3
     }
 
 }
