@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.plus.ext.query.model;
+package cn.doocom.mybatis.plus.ext.query.struct;
 
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
@@ -16,12 +16,6 @@ public class WhereBlock {
         this.innerLogic = innerLogic;
     }
 
-    public static WhereBlock convert(QueryColumn queryColumn) {
-        return new WhereBlock(queryColumn.value().getOperation(),
-                queryColumn.column(),
-                queryColumn.logic());
-    }
-
     public BaseOperation getOperation() {
         return operation;
     }
@@ -32,6 +26,12 @@ public class WhereBlock {
 
     public Logic getInnerLogic() {
         return innerLogic;
+    }
+
+    static WhereBlock convert(QueryColumn queryColumn) {
+        return new WhereBlock(queryColumn.value().getOperation(),
+                queryColumn.column(),
+                queryColumn.logic());
     }
 
 }

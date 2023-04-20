@@ -5,8 +5,8 @@ import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
-import cn.doocom.mybatis.plus.ext.query.model.QueryNode;
-import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
+import cn.doocom.mybatis.plus.ext.query.struct.QueryNode;
+import cn.doocom.mybatis.plus.ext.query.struct.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.impl.SimpleQueryClassParser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
@@ -93,6 +94,11 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                     wrapper.or(w -> doParse(obj, child, w));
                 }
             });
+        }
+        Consumer<QueryWrapper<?>> postProcessor = node.getPostProcessor();
+        // do post processor
+        if (Objects.nonNull(postProcessor)) {
+            postProcessor.accept(wrapper);
         }
     }
 

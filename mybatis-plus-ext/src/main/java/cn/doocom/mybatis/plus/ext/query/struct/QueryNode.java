@@ -1,9 +1,11 @@
-package cn.doocom.mybatis.plus.ext.query.model;
+package cn.doocom.mybatis.plus.ext.query.struct;
 
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class QueryNode {
@@ -13,6 +15,7 @@ public class QueryNode {
     private final Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
     private QueryNode parent;
     private final List<QueryNode> children;
+    private Consumer<QueryWrapper<?>> postProcessor;
 
     public QueryNode(String groupId) {
         this(groupId, Logic.AND);
@@ -57,12 +60,24 @@ public class QueryNode {
         return children;
     }
 
-    public void setParent(QueryNode parent) {
+    public Consumer<QueryWrapper<?>> getPostProcessor() {
+        return postProcessor;
+    }
+
+    void setParent(QueryNode parent) {
         this.parent = parent;
     }
 
-    public void addChild(QueryNode child) {
+    void addChild(QueryNode child) {
         this.children.add(child);
+    }
+
+    void addPostProcessor(Consumer<QueryWrapper<?>> processor) {
+        if (Objects.isNull(postProcessor)) {
+            postProcessor = processor;
+        } else {
+            postProcessor = postProcessor.andThen(processor);
+        }
     }
 
 }
