@@ -5,12 +5,9 @@ import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
-import cn.doocom.mybatis.plus.ext.query.exception.GroupNotFoundException;
 import cn.doocom.mybatis.plus.ext.query.exception.StructDefinitionException;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,12 +25,8 @@ public class QueryTree {
         root = buildTree(queryClass.getQueryGroups(), queryClass.getQueryFields());
     }
 
-    public void withPostProcessor(String groupId, Consumer<QueryWrapper<?>> processor) {
-        QueryNode queryNode = queryNodeMap.get(groupId);
-        if (Objects.isNull(queryNode)) {
-            throw new GroupNotFoundException("Unable to find Group with id " + groupId + ".");
-        }
-        queryNode.addPostProcessor(processor);
+    public boolean existsGroup(String groupId) {
+        return Objects.nonNull(queryNodeMap.get(groupId));
     }
 
     public Class<?> getClazz() {

@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
@@ -94,11 +93,6 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                     wrapper.or(w -> doParse(obj, child, w));
                 }
             });
-        }
-        Consumer<QueryWrapper<?>> postProcessor = node.getPostProcessor();
-        // do post processor
-        if (Objects.nonNull(postProcessor)) {
-            postProcessor.accept(wrapper);
         }
     }
 
