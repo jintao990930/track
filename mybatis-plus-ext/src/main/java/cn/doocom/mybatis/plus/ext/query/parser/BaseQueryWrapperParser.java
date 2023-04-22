@@ -45,14 +45,14 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         return parse(obj, entityClass, tree, null);
     }
 
-    protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree, @Nullable QueryWrapperProcessor processor) {
+    protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree, @Nullable QueryWrapperProcessor<T> processor) {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
         doParse(obj, root, result, processor);
         return result;
     }
 
-    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryWrapperProcessor processor) {
+    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryWrapperProcessor<T> processor) {
         node.getWhereBlocksMap().forEach(((field, checkWhereBlocksMap) -> {
             checkWhereBlocksMap.forEach(((check, whereBlocks) -> {
                 Object value = null;
@@ -92,7 +92,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         }
     }
 
-    private void doGroupPostProcess(QueryWrapper<?> wrapper, @Nullable Consumer<QueryWrapper<?>> groupPostProcessor) {
+    private <T> void doGroupPostProcess(QueryWrapper<T> wrapper, @Nullable Consumer<QueryWrapper<T>> groupPostProcessor) {
         if (groupPostProcessor != null) {
             groupPostProcessor.accept(wrapper);
         }

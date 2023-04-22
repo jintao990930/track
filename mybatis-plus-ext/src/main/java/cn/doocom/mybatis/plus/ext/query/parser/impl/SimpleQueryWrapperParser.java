@@ -19,7 +19,7 @@ public class SimpleQueryWrapperParser extends BaseQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor processor) {
+    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor) {
         QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
         QueryTree queryTree = new QueryTree(queryClass);
         return parse(obj, entityClass, queryTree, processor);

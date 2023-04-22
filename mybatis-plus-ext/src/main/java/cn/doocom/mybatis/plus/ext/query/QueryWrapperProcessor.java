@@ -7,33 +7,33 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class QueryWrapperProcessor {
+public class QueryWrapperProcessor<T> {
 
-    private final Map<String, Consumer<QueryWrapper<?>>> groupPostProcessorMap;
+    private final Map<String, Consumer<QueryWrapper<T>>> groupPostProcessorMap;
 
-    private QueryWrapperProcessor(Map<String, Consumer<QueryWrapper<?>>> groupPostProcessorMap) {
+    private QueryWrapperProcessor(Map<String, Consumer<QueryWrapper<T>>> groupPostProcessorMap) {
         this.groupPostProcessorMap = groupPostProcessorMap;
     }
 
-    public QueryWrapperProcessorBuilder builder() {
-        return new QueryWrapperProcessorBuilder();
+    public static <T> QueryWrapperProcessorBuilder<T> builder() {
+        return new QueryWrapperProcessorBuilder<T>();
     }
 
-    public Consumer<QueryWrapper<?>> getGroupPostProcessor(String groupId) {
+    public Consumer<QueryWrapper<T>> getGroupPostProcessor(String groupId) {
         return groupPostProcessorMap.get(groupId);
     }
 
-    public static class QueryWrapperProcessorBuilder {
+    public static class QueryWrapperProcessorBuilder<T> {
 
-        private final Map<String, Consumer<QueryWrapper<?>>> groupPostProcessorMap;
+        private final Map<String, Consumer<QueryWrapper<T>>> groupPostProcessorMap;
 
         private QueryWrapperProcessorBuilder() {
             groupPostProcessorMap = new HashMap<>();
         }
 
-        public QueryWrapperProcessorBuilder groupPostProcessor(String groupId, Consumer<QueryWrapper<?>> processor) {
+        public QueryWrapperProcessorBuilder<T> groupPostProcessor(String groupId, Consumer<QueryWrapper<T>> processor) {
             Objects.requireNonNull(processor);
-            Consumer<QueryWrapper<?>> groupPostProcessor = groupPostProcessorMap.get(groupId);
+            Consumer<QueryWrapper<T>> groupPostProcessor = groupPostProcessorMap.get(groupId);
             if (groupPostProcessor == null) {
                 groupPostProcessor = processor;
             } else {
@@ -43,8 +43,8 @@ public class QueryWrapperProcessor {
             return this;
         }
 
-        public QueryWrapperProcessor build() {
-            return new QueryWrapperProcessor(groupPostProcessorMap);
+        public QueryWrapperProcessor<T> build() {
+            return new QueryWrapperProcessor<T>(groupPostProcessorMap);
         }
 
     }

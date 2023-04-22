@@ -14,10 +14,10 @@ public interface QueryWrapperParser extends QueryClassParser {
         return parseWrapper(obj, entityClass, includeInheritedFields, null);
     }
 
-    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, @Nullable QueryWrapperProcessor processor) {
+    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, @Nullable QueryWrapperProcessor<T> processor) {
         return parseWrapper(obj, entityClass, false, processor);
     }
 
-    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor processor);
+    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor);
 
 }
