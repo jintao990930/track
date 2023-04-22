@@ -31,7 +31,7 @@ public class QueryNode {
         this.outerLogic = outerLogic;
         this.whereBlocksMap = new LinkedHashMap<>();
         setParent(parent);
-        if (Objects.nonNull(parent)) {
+        if (parent != null) {
             parent.addChild(this);
         }
         children = new ArrayList<>();

@@ -47,7 +47,7 @@ public class QueryTree {
         Map<String, String> id2ParentIdMap = new HashMap<>();
         for (QueryGroup g : groups) {
             // skip ROOT_GROUP_ID
-            if (Objects.equals(g.id(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
+            if (QueryConst.DEFAULT_ROOT_GROUP_ID.equals(g.id())) {
                 continue;
             }
             if (Objects.equals(g.id(), g.parentId())) {
@@ -61,12 +61,12 @@ public class QueryTree {
         // set parent node
         queryNodeMap.values().forEach(node -> {
             // skip ROOT QueryNode
-            if (Objects.equals(node.getGroupId(), QueryConst.DEFAULT_ROOT_GROUP_ID)) {
+            if (QueryConst.DEFAULT_ROOT_GROUP_ID.equals(node.getGroupId())) {
                 return ;
             }
             String parentGroupId = id2ParentIdMap.get(node.getGroupId());
             QueryNode parentNode = queryNodeMap.get(parentGroupId);
-            if (Objects.isNull(parentNode)) {
+            if (parentNode == null) {
                 parentNode = new QueryNode(parentGroupId, root);
             }
             node.setParent(parentNode);
@@ -81,7 +81,7 @@ public class QueryTree {
                                     Collectors.mapping(WhereBlock::convert, Collectors.toList()))));
             outerMap.forEach((groupId, innerMap) -> {
                 QueryNode node = queryNodeMap.get(groupId);
-                if (Objects.isNull(node)) {
+                if (node == null) {
                     node = new QueryNode(groupId, root);
                 }
                 queryNodeMap.putIfAbsent(groupId, node);

@@ -22,8 +22,8 @@ public enum Operator {
     BETWEEN((BinaryOperation) Compare::between),
     NOT_BETWEEN((BinaryOperation) Compare::notBetween),
 
-    IN(Func::in),
-    NOT_IN(Func::notIn),
+    IN((UnaryOperation) Func::in),
+    NOT_IN((UnaryOperation) Func::notIn),
     ;
     
     final BaseOperation operation;

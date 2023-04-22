@@ -5,18 +5,13 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 public enum Check {
 
+    NONE(o -> true),
     AUTO(Check::auto),
 
-    NOT_NULL(Objects::nonNull),
-
-    NOT_BLANK(Check::notBlank),
-
-    NOT_EMPTY(Check::notEmpty),
     ;
 
     final Function<Object, Boolean> expression;
@@ -41,27 +36,6 @@ public enum Check {
             return ((Map<?, ?>) obj).size() > 0;
         }
         return true;
-    }
-
-    private static boolean notBlank(Object obj) {
-        if (obj == null)    return false;
-        if (obj instanceof CharSequence)
-            return StringUtils.isNotBlank((CharSequence) obj);
-        throw new IllegalArgumentException("The argument should be of type CharSequence.");
-    }
-
-    private static boolean notEmpty(Object obj) {
-        if (obj == null)    return false;
-        if (obj instanceof CharSequence) {
-            return ((CharSequence) obj).length() > 0;
-        } else if (obj.getClass().isArray()) {
-            return Array.getLength(obj) > 0;
-        } else if (obj instanceof Collection) {
-            return ((Collection<?>) obj).size() > 0;
-        } else if (obj instanceof Map) {
-            return ((Map<?, ?>) obj).size() > 0;
-        }
-        throw new IllegalArgumentException("The argument should be of type CharSequence, Array, Collection, or Map.");
     }
 
 }

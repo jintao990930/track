@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
@@ -67,16 +66,16 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                     }
                     whereBlocks.forEach(block -> {
                         String column = block.getColumn();
-                        if (Objects.equals(column, QueryConst.HUMP_2_UNDER_LINE_FLAG)) {
+                        if (QueryConst.HUMP_2_UNDER_LINE_FLAG.equals(column)) {
                             column = StringUtils.camelToUnderline(field.getName());
                         }
-                        if (Objects.equals(block.getInnerLogic(), Logic.OR)) {
+                        if (Logic.OR == block.getInnerLogic()) {
                             wrapper.or();
                         }
                         if (block.getOperation() instanceof BinaryOperation) {
                             Map<String, Object> binaryValueMap = binaryValueThreadLocal.get();
                             Object anotherValue = binaryValueMap.get(column);
-                            if (Objects.isNull(anotherValue)) {
+                            if (anotherValue == null) {
                                 binaryValueMap.put(column, value);
                             } else {
                                 block.getOperation().accept(wrapper, column, anotherValue, value);
@@ -94,22 +93,22 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         List<QueryNode> children = node.getChildren();
         if (CollectionUtils.isNotEmpty(children)) {
             children.forEach(child -> {
-                if (Objects.equals(child.getOuterLogic(), Logic.AND)) {
+                if (Logic.AND == child.getOuterLogic()) {
                     wrapper.and(w -> doParse(obj, child, w, processor));
-                } else if (Objects.equals(child.getOuterLogic(), Logic.OR)) {
+                } else if (Logic.OR == child.getOuterLogic()) {
                     wrapper.or(w -> doParse(obj, child, w, processor));
                 }
             });
         }
         // do group post process
-        if (Objects.nonNull(processor)) {
+        if (processor != null) {
             doGroupPostProcess(wrapper, processor.getGroupPostProcessor(node.getGroupId()));
         }
     }
 
-    private void doGroupPostProcess(QueryWrapper<?> wrapper, @Nullable Consumer<QueryWrapper<?>> processor) {
-        if (Objects.nonNull(processor)) {
-            processor.accept(wrapper);
+    private void doGroupPostProcess(QueryWrapper<?> wrapper, @Nullable Consumer<QueryWrapper<?>> groupPostProcessor) {
+        if (groupPostProcessor != null) {
+            groupPostProcessor.accept(wrapper);
         }
     }
 

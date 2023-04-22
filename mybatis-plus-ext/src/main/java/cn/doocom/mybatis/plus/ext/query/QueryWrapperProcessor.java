@@ -34,7 +34,7 @@ public class QueryWrapperProcessor {
         public QueryWrapperProcessorBuilder groupPostProcessor(String groupId, Consumer<QueryWrapper<?>> processor) {
             Objects.requireNonNull(processor);
             Consumer<QueryWrapper<?>> groupPostProcessor = groupPostProcessorMap.get(groupId);
-            if (Objects.isNull(groupPostProcessor)) {
+            if (groupPostProcessor == null) {
                 groupPostProcessor = processor;
             } else {
                 groupPostProcessor = groupPostProcessor.andThen(processor);
