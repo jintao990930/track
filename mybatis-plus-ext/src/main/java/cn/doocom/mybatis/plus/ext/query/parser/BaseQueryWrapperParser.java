@@ -1,7 +1,9 @@
 package cn.doocom.mybatis.plus.ext.query.parser;
 
+import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
+import cn.doocom.mybatis.plus.ext.query.QueryWrapperProcessor;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
@@ -18,11 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
     protected final QueryClassParser queryClassParser;
-    protected ThreadLocal<Map<String, Object>> binaryValueThreadLocal = ThreadLocal.withInitial(() -> new HashMap<>(8));
+    private final ThreadLocal<Map<String, Object>> binaryValueThreadLocal = ThreadLocal.withInitial(() -> new HashMap<>(8));
 
     public BaseQueryWrapperParser() {
         this(new SimpleQueryClassParser());
@@ -43,14 +46,18 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
     }
 
     protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree) {
+        return parse(obj, entityClass, tree, null);
+    }
+
+    protected <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, QueryTree tree, @Nullable QueryWrapperProcessor processor) {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
-        doParse(obj, root, result);
+        doParse(obj, root, result, processor);
         binaryValueThreadLocal.remove();
         return result;
     }
 
-    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper) {
+    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryWrapperProcessor processor) {
         node.getWhereBlocksMap().forEach(((field, functionListMap) -> {
             functionListMap.forEach(((function, whereBlocks) -> {
                 try {
@@ -88,11 +95,21 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         if (CollectionUtils.isNotEmpty(children)) {
             children.forEach(child -> {
                 if (Objects.equals(child.getOuterLogic(), Logic.AND)) {
-                    wrapper.and(w -> doParse(obj, child, w));
+                    wrapper.and(w -> doParse(obj, child, w, processor));
                 } else if (Objects.equals(child.getOuterLogic(), Logic.OR)) {
-                    wrapper.or(w -> doParse(obj, child, w));
+                    wrapper.or(w -> doParse(obj, child, w, processor));
                 }
             });
+        }
+        // do group post process
+        if (Objects.nonNull(processor)) {
+            doGroupPostProcess(wrapper, processor.getGroupPostProcessor(node.getGroupId()));
+        }
+    }
+
+    private void doGroupPostProcess(QueryWrapper<?> wrapper, @Nullable Consumer<QueryWrapper<?>> processor) {
+        if (Objects.nonNull(processor)) {
+            processor.accept(wrapper);
         }
     }
 

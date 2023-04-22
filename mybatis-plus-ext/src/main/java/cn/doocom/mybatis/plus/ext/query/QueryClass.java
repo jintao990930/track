@@ -6,21 +6,21 @@ import java.util.List;
 
 public class QueryClass {
 
-    private final Class<?> clazz;
+    private final Class<?> sourceClass;
     private final boolean includeInheritedFields;
     private final List<QueryField> queryFields;
     private final QueryGroup[] queryGroups;
 
-    public QueryClass(Class<?> clazz, boolean includeInheritedFields,
+    public QueryClass(Class<?> sourceClass, boolean includeInheritedFields,
                       List<QueryField> queryFields, QueryGroup[] queryGroups) {
-        this.clazz = clazz;
+        this.sourceClass = sourceClass;
         this.includeInheritedFields = includeInheritedFields;
         this.queryFields = queryFields;
         this.queryGroups = queryGroups;
     }
 
-    public Class<?> getClazz() {
-        return clazz;
+    public Class<?> getSourceClass() {
+        return sourceClass;
     }
 
     public boolean isIncludeInheritedFields() {

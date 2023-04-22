@@ -1,6 +1,8 @@
 package cn.doocom.mybatis.plus.ext.query.parser.impl;
 
+import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
+import cn.doocom.mybatis.plus.ext.query.QueryWrapperProcessor;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryWrapperParser;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
@@ -17,10 +19,10 @@ public class SimpleQueryWrapperParser extends BaseQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields) {
+    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor processor) {
         QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
         QueryTree queryTree = new QueryTree(queryClass);
-        return parse(obj, entityClass, queryTree);
+        return parse(obj, entityClass, queryTree, processor);
     }
 
 }

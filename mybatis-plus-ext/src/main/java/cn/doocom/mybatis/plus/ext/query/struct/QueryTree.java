@@ -13,24 +13,20 @@ import java.util.stream.Collectors;
 
 public class QueryTree {
 
-    private final Class<?> clazz;
+    private final Class<?> sourceClass;
     private final boolean includeInheritedFields;
     private final QueryNode root;
     private final Map<String, QueryNode> queryNodeMap;
 
     public QueryTree(QueryClass queryClass) {
-        clazz = queryClass.getClazz();
+        sourceClass = queryClass.getSourceClass();
         includeInheritedFields = queryClass.isIncludeInheritedFields();
         queryNodeMap = new HashMap<>(4);
         root = buildTree(queryClass.getQueryGroups(), queryClass.getQueryFields());
     }
 
-    public boolean existsGroup(String groupId) {
-        return Objects.nonNull(queryNodeMap.get(groupId));
-    }
-
-    public Class<?> getClazz() {
-        return clazz;
+    public Class<?> getSourceClass() {
+        return sourceClass;
     }
 
     public boolean isIncludeInheritedFields() {
@@ -106,7 +102,7 @@ public class QueryTree {
             QueryNode first = open.remove(0);
             if (!close.add(first.getGroupId())) {
                 throw new StructDefinitionException("There is a ring exists " +
-                        "when building QueryTree for " + clazz.getName() + "." +
+                        "when building QueryTree for " + sourceClass.getName() + "." +
                         " GroupId are " + first.getGroupId() +
                         " and " + first.getParent().getGroupId() + ".");
             }
