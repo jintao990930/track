@@ -6,6 +6,7 @@ import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.exception.StructDefinitionException;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -106,7 +107,9 @@ public class QueryTree {
                         " GroupId are " + first.getGroupId() +
                         " and " + first.getParent().getGroupId() + ".");
             }
-            open.addAll(first.getChildren());
+            if (CollectionUtils.isNotEmpty(first.getChildren())) {
+                open.addAll(first.getChildren());
+            }
         }
     }
 

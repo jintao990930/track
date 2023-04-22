@@ -1,5 +1,6 @@
 package cn.doocom.mybatis.plus.ext.query.struct;
 
+import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 
 import java.lang.reflect.Field;
@@ -11,8 +12,13 @@ public class QueryNode {
     private final String groupId;
     private final Logic outerLogic;
     private final Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
+    /**
+     * ROOT QueryNode when parent is null
+     */
+    @Nullable
     private QueryNode parent;
-    private final List<QueryNode> children;
+    @Nullable
+    private List<QueryNode> children;
 
     public QueryNode(String groupId) {
         this(groupId, Logic.AND);
@@ -34,7 +40,6 @@ public class QueryNode {
         if (parent != null) {
             parent.addChild(this);
         }
-        children = new ArrayList<>();
     }
 
     public String getGroupId() {
@@ -62,6 +67,9 @@ public class QueryNode {
     }
 
     void addChild(QueryNode child) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
         this.children.add(child);
     }
 
