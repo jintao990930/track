@@ -18,12 +18,12 @@ public enum Operator {
     NOT_LIKE((UnaryOperation) Compare::notLike),
     LIKE_LEFT((UnaryOperation) Compare::likeLeft),
     LIKE_RIGHT((UnaryOperation) Compare::likeRight),
+    IN((UnaryOperation) Func::in),
+    NOT_IN((UnaryOperation) Func::notIn),
 
     BETWEEN((BinaryOperation) Compare::between),
     NOT_BETWEEN((BinaryOperation) Compare::notBetween),
 
-    IN((UnaryOperation) Func::in),
-    NOT_IN((UnaryOperation) Func::notIn),
     ;
     
     final BaseOperation operation;
