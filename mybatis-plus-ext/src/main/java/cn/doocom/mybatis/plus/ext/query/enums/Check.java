@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Map;
 import java.util.function.Function;
 
 public enum Check {
 
     NONE(o -> true),
-    AUTO(Check::auto),
+    VALID(Check::valid),
 
     ;
 
@@ -24,7 +23,7 @@ public enum Check {
         return expression;
     }
 
-    private static boolean auto(Object obj) {
+    private static boolean valid(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof CharSequence) {
             return StringUtils.isNotBlank((CharSequence) obj);
@@ -32,8 +31,6 @@ public enum Check {
             return Array.getLength(obj) > 0;
         } else if (obj instanceof Collection) {
             return ((Collection<?>) obj).size() > 0;
-        } else if (obj instanceof Map) {
-            return ((Map<?, ?>) obj).size() > 0;
         }
         return true;
     }

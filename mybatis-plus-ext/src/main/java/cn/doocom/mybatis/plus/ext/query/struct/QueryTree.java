@@ -21,7 +21,7 @@ public class QueryTree {
     public QueryTree(QueryClass queryClass) {
         sourceClass = queryClass.getSourceClass();
         includeInheritedFields = queryClass.isIncludeInheritedFields();
-        queryNodeMap = new HashMap<>(4);
+        queryNodeMap = new HashMap<>();
         root = buildTree(queryClass.getQueryGroups(), queryClass.getQueryFields());
     }
 

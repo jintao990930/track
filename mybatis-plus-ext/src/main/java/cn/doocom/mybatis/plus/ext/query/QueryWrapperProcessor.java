@@ -28,7 +28,7 @@ public class QueryWrapperProcessor {
         private final Map<String, Consumer<QueryWrapper<?>>> groupPostProcessorMap;
 
         private QueryWrapperProcessorBuilder() {
-            groupPostProcessorMap = new HashMap<>(4);
+            groupPostProcessorMap = new HashMap<>();
         }
 
         public QueryWrapperProcessorBuilder groupPostProcessor(String groupId, Consumer<QueryWrapper<?>> processor) {

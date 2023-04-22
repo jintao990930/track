@@ -19,6 +19,6 @@ public @interface QueryColumn {
     String column() default QueryConst.HUMP_2_UNDER_LINE_FLAG;
     String groupId() default QueryConst.DEFAULT_ROOT_GROUP_ID;
     Logic logic() default Logic.AND;
-    Check check() default Check.AUTO;
+    Check check() default Check.VALID;
 
 }

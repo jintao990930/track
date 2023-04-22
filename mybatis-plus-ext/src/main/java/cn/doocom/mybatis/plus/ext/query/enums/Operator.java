@@ -1,7 +1,7 @@
 package cn.doocom.mybatis.plus.ext.query.enums;
 
 import cn.doocom.mybatis.plus.ext.query.function.BaseOperation;
-import cn.doocom.mybatis.plus.ext.query.function.BinaryOperation;
+import cn.doocom.mybatis.plus.ext.query.function.MultiOperation;
 import cn.doocom.mybatis.plus.ext.query.function.UnaryOperation;
 import com.baomidou.mybatisplus.core.conditions.interfaces.Compare;
 import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
@@ -18,11 +18,9 @@ public enum Operator {
     NOT_LIKE((UnaryOperation) Compare::notLike),
     LIKE_LEFT((UnaryOperation) Compare::likeLeft),
     LIKE_RIGHT((UnaryOperation) Compare::likeRight),
-    IN((UnaryOperation) Func::in),
-    NOT_IN((UnaryOperation) Func::notIn),
 
-    BETWEEN((BinaryOperation) Compare::between),
-    NOT_BETWEEN((BinaryOperation) Compare::notBetween),
+    IN((MultiOperation) Func::in),
+    NOT_IN((MultiOperation) Func::notIn),
 
     ;
     
