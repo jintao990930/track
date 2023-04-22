@@ -17,20 +17,20 @@ public class QueryWrapperTemplate {
         this.queryWrapperParser = queryWrapperParser;
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass) {
-        return queryWrapperParser.parseWrapper(obj, entityClass);
+    public <T> QueryWrapper<T> parse(Object obj) {
+        return queryWrapperParser.parseWrapper(obj);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, boolean includeInheritedFields) {
-        return queryWrapperParser.parseWrapper(obj, entityClass, includeInheritedFields);
+    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields) {
+        return queryWrapperParser.parseWrapper(obj, includeInheritedFields);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, @Nullable QueryWrapperProcessor processor) {
-        return queryWrapperParser.parseWrapper(obj, entityClass, processor);
+    public <T> QueryWrapper<T> parse(Object obj, @Nullable QueryWrapperProcessor<T> processor) {
+        return queryWrapperParser.parseWrapper(obj, processor);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor processor) {
-        return queryWrapperParser.parseWrapper(obj, entityClass, includeInheritedFields, processor);
+    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor) {
+        return queryWrapperParser.parseWrapper(obj, includeInheritedFields, processor);
     }
 
 }

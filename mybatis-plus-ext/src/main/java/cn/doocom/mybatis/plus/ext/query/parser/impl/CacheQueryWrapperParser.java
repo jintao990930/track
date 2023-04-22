@@ -31,13 +31,13 @@ public class CacheQueryWrapperParser extends BaseQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor) {
+    public <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor) {
         String cacheKey = generateCacheKey(obj.getClass(), includeInheritedFields);
         QueryTree queryTree = cache.computeIfAbsent(cacheKey, key -> {
             QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
             return new QueryTree(queryClass);
         });
-        return parse(obj, entityClass, queryTree, processor);
+        return parse(obj, queryTree, processor);
     }
 
 }

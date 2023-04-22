@@ -6,18 +6,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 public interface QueryWrapperParser extends QueryClassParser {
 
-    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass) {
-        return parseWrapper(obj, entityClass, false);
+    default <T> QueryWrapper<T> parseWrapper(Object obj) {
+        return parseWrapper(obj, false, null);
     }
 
-    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields) {
-        return parseWrapper(obj, entityClass, includeInheritedFields, null);
+    default <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields) {
+        return parseWrapper(obj, includeInheritedFields, null);
     }
 
-    default <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, @Nullable QueryWrapperProcessor<T> processor) {
-        return parseWrapper(obj, entityClass, false, processor);
+    default <T> QueryWrapper<T> parseWrapper(Object obj, @Nullable QueryWrapperProcessor<T> processor) {
+        return parseWrapper(obj, false, processor);
     }
 
-    <T> QueryWrapper<T> parseWrapper(Object obj, Class<T> entityClass, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor);
+    <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor);
 
 }
