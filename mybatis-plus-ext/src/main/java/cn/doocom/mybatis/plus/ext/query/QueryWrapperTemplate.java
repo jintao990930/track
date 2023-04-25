@@ -25,11 +25,11 @@ public class QueryWrapperTemplate {
         return queryWrapperParser.parseWrapper(obj, includeInheritedFields);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, @Nullable QueryWrapperProcessor<T> processor) {
+    public <T> QueryWrapper<T> parse(Object obj, @Nullable QueryOption<T> processor) {
         return queryWrapperParser.parseWrapper(obj, processor);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields, @Nullable QueryWrapperProcessor<T> processor) {
+    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> processor) {
         return queryWrapperParser.parseWrapper(obj, includeInheritedFields, processor);
     }
 

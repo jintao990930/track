@@ -3,13 +3,13 @@ package cn.doocom.mybatis.plus.ext.query.parser;
 import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
-import cn.doocom.mybatis.plus.ext.query.QueryWrapperProcessor;
+import cn.doocom.mybatis.plus.ext.query.QueryOption;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryNode;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.impl.SimpleQueryClassParser;
-import cn.doocom.mybatis.plus.ext.query.struct.WhereBlock;
+import cn.doocom.mybatis.plus.ext.query.struct.QueryBlock;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -45,16 +45,16 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         return parse(obj, tree, null);
     }
 
-    protected <T> QueryWrapper<T> parse(Object obj, QueryTree tree, @Nullable QueryWrapperProcessor<T> processor) {
+    protected <T> QueryWrapper<T> parse(Object obj, QueryTree tree, @Nullable QueryOption<T> processor) {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
         doParse(obj, root, result, processor);
         return result;
     }
 
-    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryWrapperProcessor<T> processor) {
-        node.getWhereBlocksMap().forEach(((field, checkWhereBlocksMap) -> {
-            checkWhereBlocksMap.forEach(((check, whereBlocks) -> {
+    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> processor) {
+        node.getQueryBlocksMap().forEach(((field, checkQueryBlocksMap) -> {
+            checkQueryBlocksMap.forEach(((check, queryBlocks) -> {
                 Object value = null;
                 try {
                     value = field.get(obj);
@@ -64,7 +64,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                 if (!check.apply(value)) {
                     return ;
                 }
-                for (WhereBlock block : whereBlocks) {
+                for (QueryBlock block : queryBlocks) {
                     String column = block.getColumn();
                     if (QueryConst.HUMP_2_UNDER_LINE_FLAG.equals(column)) {
                         column = StringUtils.camelToUnderline(field.getName());

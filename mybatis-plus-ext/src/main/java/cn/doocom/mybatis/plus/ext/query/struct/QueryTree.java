@@ -76,19 +76,19 @@ public class QueryTree {
         });
         checkRingExists(root);
         for (QueryField field : fields) {
-            Map<String, Map<Function<Object, Boolean>, List<WhereBlock>>> outerMap = Arrays.stream(field.getQueryColumns())
+            Map<String, Map<Function<Object, Boolean>, List<QueryBlock>>> outerMap = Arrays.stream(field.getQueryColumns())
                     .collect(Collectors.groupingBy(QueryColumn::groupId,
                             Collectors.groupingBy(column -> column.check().getExpression(),
-                                    Collectors.mapping(WhereBlock::convert, Collectors.toList()))));
+                                    Collectors.mapping(QueryBlock::convert, Collectors.toList()))));
             outerMap.forEach((groupId, innerMap) -> {
                 QueryNode node = queryNodeMap.get(groupId);
                 if (node == null) {
                     node = new QueryNode(groupId, root);
                 }
                 queryNodeMap.putIfAbsent(groupId, node);
-                Map<Function<Object, Boolean>, List<WhereBlock>> blocksMap = node.getWhereBlocksMap().getOrDefault(field.getField(), new HashMap<>());
+                Map<Function<Object, Boolean>, List<QueryBlock>> blocksMap = node.getQueryBlocksMap().getOrDefault(field.getField(), new HashMap<>());
                 blocksMap.putAll(innerMap);
-                node.getWhereBlocksMap().putIfAbsent(field.getField(), blocksMap);
+                node.getQueryBlocksMap().putIfAbsent(field.getField(), blocksMap);
             });
         }
         return root;

@@ -11,9 +11,9 @@ public class QueryNode {
 
     private final String groupId;
     private final Logic outerLogic;
-    private final Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> whereBlocksMap;
+    private final Map<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> queryBlocksMap;
     /**
-     * ROOT QueryNode when parent is null
+     * only when ROOT QueryNode, parent is null
      */
     @Nullable
     private QueryNode parent;
@@ -35,7 +35,7 @@ public class QueryNode {
     public QueryNode(String groupId, Logic outerLogic, QueryNode parent) {
         this.groupId = groupId;
         this.outerLogic = outerLogic;
-        this.whereBlocksMap = new HashMap<>();
+        this.queryBlocksMap = new HashMap<>();
         setParent(parent);
         if (parent != null) {
             parent.addChild(this);
@@ -50,8 +50,8 @@ public class QueryNode {
         return outerLogic;
     }
 
-    public Map<Field, Map<Function<Object, Boolean>, List<WhereBlock>>> getWhereBlocksMap() {
-        return whereBlocksMap;
+    public Map<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> getQueryBlocksMap() {
+        return queryBlocksMap;
     }
 
     public QueryNode getParent() {
