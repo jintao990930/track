@@ -3,7 +3,6 @@ package cn.doocom.mybatis.plus.ext.query;
 import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sun.istack.internal.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class QueryOption<T> {
         return new QueryOptionBuilder<T>();
     }
 
-    @NotNull
+    @Nullable
     public Consumer<QueryWrapper<T>> getPostProcessor(String groupId) {
         if (postProcessorMap == null) {
             return null;
