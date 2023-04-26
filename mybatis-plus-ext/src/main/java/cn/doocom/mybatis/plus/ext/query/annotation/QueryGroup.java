@@ -10,7 +10,10 @@ import java.lang.annotation.*;
 @Repeatable(QueryGroups.class)
 public @interface QueryGroup {
 
-    String id();
+    /**
+     * alias for id
+     */
+    String value();
     String parentId() default QueryConst.DEFAULT_ROOT_GROUP_ID;
     Logic logic() default Logic.AND;
 

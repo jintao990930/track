@@ -48,16 +48,16 @@ public class QueryTree {
         Map<String, String> id2ParentIdMap = new HashMap<>();
         for (QueryGroup g : groups) {
             // skip ROOT_GROUP_ID
-            if (QueryConst.DEFAULT_ROOT_GROUP_ID.equals(g.id())) {
+            if (QueryConst.DEFAULT_ROOT_GROUP_ID.equals(g.value())) {
                 continue;
             }
-            if (Objects.equals(g.id(), g.parentId())) {
+            if (Objects.equals(g.value(), g.parentId())) {
                 throw new StructDefinitionException("The parent of Group can't be itself.");
             }
-            QueryNode node = new QueryNode(g.id(), g.logic());
+            QueryNode node = new QueryNode(g.value(), g.logic());
             // the latter covers the former
-            queryNodeMap.put(g.id(), node);
-            id2ParentIdMap.put(g.id(), g.parentId());
+            queryNodeMap.put(g.value(), node);
+            id2ParentIdMap.put(g.value(), g.parentId());
         }
         // set parent node
         queryNodeMap.values().forEach(node -> {
