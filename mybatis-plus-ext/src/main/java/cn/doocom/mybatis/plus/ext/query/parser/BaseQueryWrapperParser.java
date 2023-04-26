@@ -45,14 +45,14 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         return parse(obj, tree, null);
     }
 
-    protected <T> QueryWrapper<T> parse(Object obj, QueryTree tree, @Nullable QueryOption<T> processor) {
+    protected <T> QueryWrapper<T> parse(Object obj, QueryTree tree, @Nullable QueryOption<T> option) {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
-        doParse(obj, root, result, processor);
+        doParse(obj, root, result, option);
         return result;
     }
 
-    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> processor) {
+    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> option) {
         node.getQueryBlocksMap().forEach(((field, checkQueryBlocksMap) -> {
             checkQueryBlocksMap.forEach(((check, queryBlocks) -> {
                 Object value = null;
@@ -80,15 +80,15 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         if (CollectionUtils.isNotEmpty(children)) {
             children.forEach(child -> {
                 if (Logic.AND == child.getOuterLogic()) {
-                    wrapper.and(w -> doParse(obj, child, w, processor));
+                    wrapper.and(w -> doParse(obj, child, w, option));
                 } else if (Logic.OR == child.getOuterLogic()) {
-                    wrapper.or(w -> doParse(obj, child, w, processor));
+                    wrapper.or(w -> doParse(obj, child, w, option));
                 }
             });
         }
         // handle processor
-        if (processor != null) {
-            doPostProcess(wrapper, processor.getPostProcessor(node.getGroupId()));
+        if (option != null) {
+            doPostProcess(wrapper, option.getPostProcessor(node.getGroupId()));
         }
     }
 

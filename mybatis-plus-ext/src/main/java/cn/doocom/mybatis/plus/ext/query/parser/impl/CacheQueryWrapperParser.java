@@ -23,13 +23,13 @@ public class CacheQueryWrapperParser extends BaseQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> processor) {
+    public <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> option) {
         String cacheKey = generateCacheKey(obj.getClass(), includeInheritedFields);
         QueryTree queryTree = cache.computeIfAbsent(cacheKey, key -> {
             QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
             return new QueryTree(queryClass);
         });
-        return parse(obj, queryTree, processor);
+        return parse(obj, queryTree, option);
     }
 
     protected String generateCacheKey(Class<?> clz, boolean includeInheritedFields) {
