@@ -24,10 +24,7 @@ public class QueryOption<T> {
 
     @Nullable
     public Consumer<QueryWrapper<T>> getPostProcessor(String groupId) {
-        if (postProcessorMap == null) {
-            return null;
-        }
-        return postProcessorMap.get(groupId);
+        return postProcessorMap == null ? null : postProcessorMap.get(groupId);
     }
 
     public static class QueryOptionBuilder<T> {
