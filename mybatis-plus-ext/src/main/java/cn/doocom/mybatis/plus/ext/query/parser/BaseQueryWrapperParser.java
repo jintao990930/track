@@ -67,7 +67,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
             for (Map.Entry<Function<Object, Boolean>, List<QueryBlock>> innerEntry : innerEntrySet) {
                 Function<Object, Boolean> checkFunction = innerEntry.getKey();
                 if (!checkFunction.apply(value)) {
-                    return ;
+                    continue ;
                 }
                 List<QueryBlock> queryBlocks = innerEntry.getValue();
                 for (QueryBlock block : queryBlocks) {
