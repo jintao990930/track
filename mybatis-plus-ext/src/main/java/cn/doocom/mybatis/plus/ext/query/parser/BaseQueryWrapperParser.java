@@ -4,7 +4,6 @@ import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.QueryOption;
-import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryNode;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryTree;
@@ -12,12 +11,14 @@ import cn.doocom.mybatis.plus.ext.query.parser.impl.SimpleQueryClassParser;
 import cn.doocom.mybatis.plus.ext.query.struct.QueryBlock;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
@@ -53,29 +54,30 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
     }
 
     private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> option) {
-        node.getQueryBlocksMap().forEach(((field, checkQueryBlocksMap) -> {
-            checkQueryBlocksMap.forEach(((check, queryBlocks) -> {
-                Object value = null;
-                try {
-                    value = field.get(obj);
-                } catch (IllegalAccessException ignored) {
-                    // would never happen
-                }
-                if (!check.apply(value)) {
+        Set<Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>>> outerEntrySet = node.getQueryBlocksMap().entrySet();
+        for (Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> outerEntry : outerEntrySet) {
+            Field field = outerEntry.getKey();
+            Object value = null;
+            try {
+                value = field.get(obj);
+            } catch (IllegalAccessException ignored) {
+                // would never happen
+            }
+            Set<Map.Entry<Function<Object, Boolean>, List<QueryBlock>>> innerEntrySet = outerEntry.getValue().entrySet();
+            for (Map.Entry<Function<Object, Boolean>, List<QueryBlock>> innerEntry : innerEntrySet) {
+                Function<Object, Boolean> checkFunction = innerEntry.getKey();
+                if (!checkFunction.apply(value)) {
                     return ;
                 }
+                List<QueryBlock> queryBlocks = innerEntry.getValue();
                 for (QueryBlock block : queryBlocks) {
-                    String column = block.getColumn();
-                    if (QueryConst.HUMP_2_UNDER_LINE_FLAG.equals(column)) {
-                        column = StringUtils.camelToUnderline(field.getName());
-                    }
                     if (Logic.OR == block.getInnerLogic()) {
                         wrapper.or();
                     }
-                    block.getOperation().accept(wrapper, column, value);
+                    block.getOperation().accept(wrapper, block.getColumn(), value);
                 }
-            }));
-        }));
+            }
+        }
         List<QueryNode> children = node.getChildren();
         if (CollectionUtils.isNotEmpty(children)) {
             children.forEach(child -> {

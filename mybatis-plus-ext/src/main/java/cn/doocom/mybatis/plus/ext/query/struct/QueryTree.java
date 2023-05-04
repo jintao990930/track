@@ -78,8 +78,9 @@ public class QueryTree {
         for (QueryField field : fields) {
             Map<String, Map<Function<Object, Boolean>, List<QueryBlock>>> outerMap = Arrays.stream(field.getQueryColumns())
                     .collect(Collectors.groupingBy(QueryColumn::groupId,
-                            Collectors.groupingBy(column -> column.check().getExpression(),
-                                    Collectors.mapping(QueryBlock::convert, Collectors.toList()))));
+                            Collectors.groupingBy(qc -> qc.check().getExpression(),
+                                    Collectors.mapping(qc -> QueryBlock.convert(qc, field.getField()),
+                                            Collectors.toList()))));
             outerMap.forEach((groupId, innerMap) -> {
                 QueryNode node = queryNodeMap.get(groupId);
                 if (node == null) {
