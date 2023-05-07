@@ -3,7 +3,7 @@ package cn.doocom.mybatis.plus.ext.query.parser.impl;
 import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryOption;
-import cn.doocom.mybatis.plus.ext.query.struct.QueryTree;
+import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
 import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryWrapperParser;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryClassParser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

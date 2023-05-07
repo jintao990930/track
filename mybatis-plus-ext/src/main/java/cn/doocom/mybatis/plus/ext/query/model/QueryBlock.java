@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.plus.ext.query.struct;
+package cn.doocom.mybatis.plus.ext.query.model;
 
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
 import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;

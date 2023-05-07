@@ -1,4 +1,4 @@
-package cn.doocom.mybatis.plus.ext.query.struct;
+package cn.doocom.mybatis.plus.ext.query.model;
 
 import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
