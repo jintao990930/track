@@ -4,6 +4,7 @@ import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.QueryOption;
+import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.model.QueryNode;
 import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
@@ -54,6 +55,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
     }
 
     private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> option) {
+        boolean with1eq1 = true;
         Set<Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>>> outerEntrySet = node.getQueryBlocksMap().entrySet();
         for (Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> outerEntry : outerEntrySet) {
             Field field = outerEntry.getKey();
@@ -69,6 +71,7 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
                 if (!checkFunction.apply(value)) {
                     continue ;
                 }
+                with1eq1 = false;
                 List<QueryBlock> queryBlocks = innerEntry.getValue();
                 for (QueryBlock block : queryBlocks) {
                     if (Logic.OR == block.getInnerLogic()) {
@@ -91,6 +94,9 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         // handle processor
         if (option != null) {
             doPostProcess(wrapper, option.getPostProcessor(node.getGroupId()));
+        }
+        if (with1eq1 && !QueryConst.DEFAULT_ROOT_GROUP_ID.equals(node.getGroupId())) {
+            wrapper.apply("1 = 1");
         }
     }
 
