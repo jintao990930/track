@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @SpringBootTest
-public class MultiOperatorTests {
+public class MultiOperationTests {
 
     @Autowired
     private QueryWrapperTemplate queryWrapperTemplate;
@@ -22,7 +22,7 @@ public class MultiOperatorTests {
     private UserMapper userMapper;
 
     @Test
-    public void test1() {
+    public void partOneTest() {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("an");
         userDTO.setAgeStart(18);
@@ -34,14 +34,12 @@ public class MultiOperatorTests {
     }
 
     @Test
-    public void test2() {
-        LocalDate birthdayStart = LocalDate.of(1995, 7, 13);
-        LocalDate birthdayEnd = LocalDate.of(2007, 9, 25);
+    public void partTwoTest() {
         UserDTO2 userDTO2 = new UserDTO2();
         userDTO2.setId(3L);
         userDTO2.setAge(23);
-        userDTO2.setBirthdayStart(birthdayStart);
-        userDTO2.setBirthdayEnd(birthdayEnd);
+        userDTO2.setBirthdayStart(LocalDate.of(1995, 7, 13));
+        userDTO2.setBirthdayEnd(LocalDate.of(2007, 9, 25));
         userDTO2.setNotLikeEmail("126.com");
         userDTO2.setLikeLeftEmail(".com");
         userDTO2.setLikeRightEmail("test");

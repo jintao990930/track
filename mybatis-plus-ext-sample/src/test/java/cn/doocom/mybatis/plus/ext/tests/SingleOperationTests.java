@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @SpringBootTest
-public class SingleOperatorTests {
+public class SingleOperationTests {
 
     @Autowired
     private QueryWrapperTemplate queryWrapperTemplate;
