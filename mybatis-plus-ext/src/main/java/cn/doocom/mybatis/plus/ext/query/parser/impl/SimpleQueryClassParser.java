@@ -3,7 +3,6 @@ package cn.doocom.mybatis.plus.ext.query.parser.impl;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
-import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
 import cn.doocom.mybatis.plus.ext.query.parser.BaseQueryClassParser;
 import cn.doocom.mybatis.plus.ext.query.parser.QueryFieldParser;
 import cn.doocom.common.util.AnnotationUtil;
@@ -27,8 +26,7 @@ public class SimpleQueryClassParser extends BaseQueryClassParser {
         List<Field> annotatedFields = AnnotationUtil.getAnnotatedFields(clz, QueryColumn.class, includedSuperclasses);
         List<QueryField> queryFields = new ArrayList<>(annotatedFields.size());
         annotatedFields.forEach(e -> queryFields.add(queryFieldParser.parseField(e)));
-        List<QueryGroup> queryGroups = AnnotationUtil.getDeclaredAnnotationsByType(clz, QueryGroup.class, includedSuperclasses);
-        return new QueryClass(clz, includedSuperclasses, queryFields, queryGroups);
+        return new QueryClass(clz, includedSuperclasses, queryFields);
     }
 
 }

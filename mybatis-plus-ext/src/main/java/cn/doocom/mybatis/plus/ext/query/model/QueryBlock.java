@@ -10,35 +10,34 @@ import java.lang.reflect.Field;
 
 public class QueryBlock {
 
-    private final BaseOperation operation;
-    private final String column;
     private final Logic innerLogic;
+    private final String column;
+    private final BaseOperation operation;
 
-    public QueryBlock(BaseOperation operation, String column, Logic innerLogic) {
-        this.operation = operation;
-        this.column = column;
+    public QueryBlock(Logic innerLogic, String column, BaseOperation operation) {
         this.innerLogic = innerLogic;
-    }
-
-    public BaseOperation getOperation() {
-        return operation;
-    }
-
-    public String getColumn() {
-        return column;
+        this.column = column;
+        this.operation = operation;
     }
 
     public Logic getInnerLogic() {
         return innerLogic;
     }
 
-    static QueryBlock convert(QueryColumn queryColumn, Field field) {
-        String column = queryColumn.column();
+    public String getColumn() {
+        return column;
+    }
+
+    public BaseOperation getOperation() {
+        return operation;
+    }
+
+    static QueryBlock convert(Field field, QueryColumn qc) {
+        String column = qc.column();
         if (QueryConst.HUMP_2_UNDER_LINE_FLAG.equals(column)) {
             column = StringUtils.camelToUnderline(field.getName());
         }
-        return new QueryBlock(queryColumn.value().getOperation(),
-                column, queryColumn.logic());
+        return new QueryBlock(qc.logic(), column, qc.value().getOperation());
     }
 
 }

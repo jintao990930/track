@@ -4,7 +4,6 @@ import cn.doocom.common.annotation.Nullable;
 import cn.doocom.mybatis.plus.ext.query.QueryClass;
 import cn.doocom.mybatis.plus.ext.query.QueryField;
 import cn.doocom.mybatis.plus.ext.query.QueryOption;
-import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 import cn.doocom.mybatis.plus.ext.query.enums.Logic;
 import cn.doocom.mybatis.plus.ext.query.model.QueryNode;
 import cn.doocom.mybatis.plus.ext.query.model.QueryTree;
@@ -50,11 +49,11 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
     protected <T> QueryWrapper<T> parse(Object obj, QueryTree tree, @Nullable QueryOption<T> option) {
         QueryWrapper<T> result = Wrappers.query();
         QueryNode root = tree.getRoot();
-        doParse(obj, root, result, option);
+        doParse(result, obj, root, option);
         return result;
     }
 
-    private <T> void doParse(Object obj, QueryNode node, QueryWrapper<T> wrapper, @Nullable QueryOption<T> option) {
+    private <T> void doParse(QueryWrapper<T> wrapper, Object obj, QueryNode node, @Nullable QueryOption<T> option) {
         boolean with1eq1 = true;
         Set<Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>>> outerEntrySet = node.getQueryBlocksMap().entrySet();
         for (Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> outerEntry : outerEntrySet) {
@@ -83,26 +82,16 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         }
         List<QueryNode> children = node.getChildren();
         if (CollectionUtils.isNotEmpty(children)) {
-            children.forEach(child -> {
-                if (Logic.AND == child.getOuterLogic()) {
-                    wrapper.and(w -> doParse(obj, child, w, option));
-                } else if (Logic.OR == child.getOuterLogic()) {
-                    wrapper.or(w -> doParse(obj, child, w, option));
-                }
-            });
+            children.forEach(child -> wrapper.and(w -> doParse(w, obj, child, option)));
         }
         // handle processor
-        if (option != null) {
-            doPostProcess(wrapper, option.getPostProcessor(node.getGroupId()));
-        }
-        if (with1eq1 && !QueryConst.DEFAULT_ROOT_GROUP_ID.equals(node.getGroupId())) {
-            wrapper.apply("1 = 1");
-        }
-    }
-
-    private <T> void doPostProcess(QueryWrapper<T> wrapper, @Nullable Consumer<QueryWrapper<T>> postProcessor) {
-        if (postProcessor != null) {
+        Consumer<QueryWrapper<T>> postProcessor;
+        if (option != null
+                && (postProcessor = option.getPostProcessor(node.getGroupId())) != null) {
             postProcessor.accept(wrapper);
+        }
+        if (with1eq1 && !node.isRoot()) {
+            wrapper.apply("1 = 1");
         }
     }
 

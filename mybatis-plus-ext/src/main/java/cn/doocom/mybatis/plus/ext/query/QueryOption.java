@@ -41,7 +41,7 @@ public class QueryOption<T> {
         public QueryOptionBuilder<T> withProcessor(String groupId, Consumer<QueryWrapper<T>> postProcessor) {
             Objects.requireNonNull(postProcessor);
             if (Objects.isNull(postProcessorMap)) {
-                postProcessorMap = new HashMap<>();
+                postProcessorMap = new HashMap<>(8);
             }
             Consumer<QueryWrapper<T>> groupPostProcessor = postProcessorMap.get(groupId);
             if (groupPostProcessor == null) {

@@ -9,7 +9,7 @@ import java.util.function.Function;
 public enum Check {
 
     NONE(o -> true),
-    VALID(Check::valid),
+    AUTO(Check::validate),
 
     ;
 
@@ -23,7 +23,7 @@ public enum Check {
         return expression;
     }
 
-    private static boolean valid(Object obj) {
+    private static boolean validate(Object obj) {
         if (obj == null)    return false;
         if (obj instanceof CharSequence) {
             return StringUtils.isNotBlank((CharSequence) obj);

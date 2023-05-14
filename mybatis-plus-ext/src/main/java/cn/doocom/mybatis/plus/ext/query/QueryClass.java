@@ -1,7 +1,5 @@
 package cn.doocom.mybatis.plus.ext.query;
 
-import cn.doocom.mybatis.plus.ext.query.annotation.QueryGroup;
-
 import java.util.List;
 
 public class QueryClass {
@@ -9,14 +7,12 @@ public class QueryClass {
     private final Class<?> sourceClass;
     private final boolean includedSuperclasses;
     private final List<QueryField> queryFields;
-    private final List<QueryGroup> queryGroups;
 
     public QueryClass(Class<?> sourceClass, boolean includedSuperclasses,
-                      List<QueryField> queryFields, List<QueryGroup> queryGroups) {
+                      List<QueryField> queryFields) {
         this.sourceClass = sourceClass;
         this.includedSuperclasses = includedSuperclasses;
         this.queryFields = queryFields;
-        this.queryGroups = queryGroups;
     }
 
     public Class<?> getSourceClass() {
@@ -29,10 +25,6 @@ public class QueryClass {
 
     public List<QueryField> getQueryFields() {
         return queryFields;
-    }
-
-    public List<QueryGroup> getQueryGroups() {
-        return queryGroups;
     }
 
 }

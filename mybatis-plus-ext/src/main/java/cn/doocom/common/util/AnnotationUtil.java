@@ -23,15 +23,15 @@ public class AnnotationUtil {
         return getAnnotatedFields(clz, annotation, false);
     }
 
-    public static <T extends Annotation> List<T> getDeclaredAnnotationsByType(Class<?> clz, Class<T> annotation, boolean includeSuperclasses) {
+    public static <T extends Annotation> List<T> getDeclaredAnnotationsByType(Class<?> clz, Class<T> annotation, boolean includedSuperclasses) {
         List<T> result = new ArrayList<>();
-        doGetDeclaredAnnotationsByType(clz, annotation, includeSuperclasses, result, getContainerAnnotation(annotation));
+        doGetDeclaredAnnotationsByType(clz, annotation, includedSuperclasses, result, getContainerAnnotation(annotation));
         return result;
     }
 
-    public static List<Class<?>> getAnnotatedClasses(Class<?> clz, Class<? extends Annotation> annotation, boolean includeSuperclasses) {
+    public static List<Class<?>> getAnnotatedClasses(Class<?> clz, Class<? extends Annotation> annotation, boolean includedSuperclasses) {
         List<Class<?>> result = new ArrayList<>();
-        doGetAnnotatedClasses(clz, annotation, includeSuperclasses, result, getContainerAnnotation(annotation));
+        doGetAnnotatedClasses(clz, annotation, includedSuperclasses, result, getContainerAnnotation(annotation));
         return result;
     }
 
@@ -50,13 +50,13 @@ public class AnnotationUtil {
     }
 
     private static <T extends Annotation> void doGetDeclaredAnnotationsByType(Class<?> clz, Class<T> annotation,
-                                                                              boolean includeSuperclasses, List<T> result,
+                                                                              boolean includedSuperclasses, List<T> result,
                                                                               @Nullable Class<? extends Annotation> containerAnnotation) {
         Class<?> superclass;
         if (Object.class == clz || (superclass = clz.getSuperclass()) == null) {
             return ;
         }
-        if (includeSuperclasses) {
+        if (includedSuperclasses) {
             doGetDeclaredAnnotationsByType(superclass, annotation, true, result, containerAnnotation);
         }
         if (clz.isAnnotationPresent(annotation)
@@ -66,13 +66,13 @@ public class AnnotationUtil {
     }
 
     private static void doGetAnnotatedClasses(Class<?> clz, Class<? extends Annotation> annotation,
-                                              boolean includeSuperclasses, List<Class<?>> result,
+                                              boolean includedSuperclasses, List<Class<?>> result,
                                               @Nullable Class<? extends Annotation> containerAnnotation) {
         Class<?> superclass;
         if (Object.class == clz || (superclass = clz.getSuperclass()) == null) {
             return ;
         }
-        if (includeSuperclasses) {
+        if (includedSuperclasses) {
             doGetAnnotatedClasses(superclass, annotation, true, result, containerAnnotation);
         }
         if (clz.isAnnotationPresent(annotation)
