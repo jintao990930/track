@@ -10,18 +10,18 @@ import java.lang.reflect.Field;
 
 public class QueryBlock {
 
-    private final Logic innerLogic;
+    private final Logic logic;
     private final String column;
     private final BaseOperation operation;
 
-    public QueryBlock(Logic innerLogic, String column, BaseOperation operation) {
-        this.innerLogic = innerLogic;
+    public QueryBlock(Logic logic, String column, BaseOperation operation) {
+        this.logic = logic;
         this.column = column;
         this.operation = operation;
     }
 
-    public Logic getInnerLogic() {
-        return innerLogic;
+    public Logic getLogic() {
+        return logic;
     }
 
     public String getColumn() {

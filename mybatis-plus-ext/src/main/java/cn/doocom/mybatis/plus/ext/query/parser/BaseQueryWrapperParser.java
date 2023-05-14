@@ -14,9 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -53,46 +51,67 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
         return result;
     }
 
-    private <T> void doParse(QueryWrapper<T> wrapper, Object obj, QueryNode node, @Nullable QueryOption<T> option) {
-        boolean with1eq1 = true;
-        Set<Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>>> outerEntrySet = node.getQueryBlocksMap().entrySet();
-        for (Map.Entry<Field, Map<Function<Object, Boolean>, List<QueryBlock>>> outerEntry : outerEntrySet) {
-            Field field = outerEntry.getKey();
+    private <T> void doParse(QueryWrapper<T> wrapper, Object obj, QueryNode root, @Nullable QueryOption<T> option) {
+        Map<QueryBlock, Object> blockValueMap = extractBlockValueMap(obj, root);
+        setCondition(wrapper, blockValueMap);
+        List<QueryNode> children = root.getChildren();
+        if (CollectionUtils.isNotEmpty(children)) {
+            children.forEach(child -> {
+                Map<QueryBlock, Object> childBlockValueMap = extractBlockValueMap(obj, child);
+                Optional<Consumer<QueryWrapper<T>>> optionalProcessor = getPostProcessor(child, option);
+                boolean emptyMap = CollectionUtils.isEmpty(childBlockValueMap);
+                if (emptyMap && !optionalProcessor.isPresent()) {
+                    return ;
+                }
+                wrapper.and(w -> {
+                    if (emptyMap) {
+                        w.apply("1 = 1");
+                    } else {
+                        setCondition(w, childBlockValueMap);
+                    }
+                    optionalProcessor.ifPresent(processor -> processor.accept(w));
+                });
+            });
+        }
+        getPostProcessor(root, option).ifPresent(processor -> processor.accept(wrapper));
+    }
+
+    private Map<QueryBlock, Object> extractBlockValueMap(Object obj, QueryNode node) {
+        Map<QueryBlock, Object> result = new HashMap<>(8);
+        node.getQueryBlocksMap().forEach((field, outerMap) -> {
             Object value = null;
             try {
                 value = field.get(obj);
             } catch (IllegalAccessException ignored) {
                 // would never happen
             }
-            Set<Map.Entry<Function<Object, Boolean>, List<QueryBlock>>> innerEntrySet = outerEntry.getValue().entrySet();
-            for (Map.Entry<Function<Object, Boolean>, List<QueryBlock>> innerEntry : innerEntrySet) {
-                Function<Object, Boolean> checkFunction = innerEntry.getKey();
-                if (!checkFunction.apply(value)) {
-                    continue ;
+            Object finalValue = value;
+            outerMap.forEach((check, queryBlocks) -> {
+                if (!check.apply(finalValue)) {
+                    return ;
                 }
-                with1eq1 = false;
-                List<QueryBlock> queryBlocks = innerEntry.getValue();
                 for (QueryBlock block : queryBlocks) {
-                    if (Logic.OR == block.getInnerLogic()) {
-                        wrapper.or();
-                    }
-                    block.getOperation().accept(wrapper, block.getColumn(), value);
+                    result.put(block, finalValue);
                 }
+            });
+        });
+        return result;
+    }
+
+    private <T> void setCondition(QueryWrapper<T> wrapper, Map<QueryBlock, Object> blockValueMap) {
+        blockValueMap.forEach((block, value) -> {
+            if (block.getLogic() == Logic.OR) {
+                wrapper.or();
             }
+            block.getOperation().accept(wrapper, block.getColumn(), value);
+        });
+    }
+
+    private <T> Optional<Consumer<QueryWrapper<T>>> getPostProcessor(QueryNode node, @Nullable QueryOption<T> option) {
+        if (option == null) {
+            return Optional.empty();
         }
-        List<QueryNode> children = node.getChildren();
-        if (CollectionUtils.isNotEmpty(children)) {
-            children.forEach(child -> wrapper.and(w -> doParse(w, obj, child, option)));
-        }
-        // handle processor
-        Consumer<QueryWrapper<T>> postProcessor;
-        if (option != null
-                && (postProcessor = option.getPostProcessor(node.getGroupId())) != null) {
-            postProcessor.accept(wrapper);
-        }
-        if (with1eq1 && !node.isRoot()) {
-            wrapper.apply("1 = 1");
-        }
+        return Optional.ofNullable(option.getPostProcessor(node.getGroupId()));
     }
 
 }
