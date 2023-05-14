@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
 
