@@ -40,14 +40,15 @@
             <version>3.5.3.1</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <!-- mybatis-plus-ext -->
         <dependency>
             <groupId>cn.doocom</groupId>
             <artifactId>mybatis-plus-ext</artifactId>
