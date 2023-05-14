@@ -1,7 +1,6 @@
 package cn.doocom.mybatis.plus.ext.query.model;
 
 import cn.doocom.common.annotation.Nullable;
-import cn.doocom.mybatis.plus.ext.query.consts.QueryConst;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -24,10 +23,6 @@ public class QueryNode {
         if (parent != null) {
             parent.addChild(this);
         }
-    }
-
-    public boolean isRoot() {
-        return QueryConst.DEFAULT_ROOT_GROUP_ID.equals(groupId);
     }
 
     public String getGroupId() {
