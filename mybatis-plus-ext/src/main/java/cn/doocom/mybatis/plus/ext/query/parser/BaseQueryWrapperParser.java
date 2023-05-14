@@ -34,8 +34,8 @@ public abstract class BaseQueryWrapperParser implements QueryWrapperParser {
     }
 
     @Override
-    public QueryClass parseClass(Class<?> clz, boolean includeInheritedFields) {
-        return queryClassParser.parseClass(clz, includeInheritedFields);
+    public QueryClass parseClass(Class<?> clz, boolean includedSuperclasses) {
+        return queryClassParser.parseClass(clz, includedSuperclasses);
     }
 
     @Override

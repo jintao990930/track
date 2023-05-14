@@ -21,16 +21,16 @@ public class QueryWrapperTemplate {
         return queryWrapperParser.parseWrapper(obj);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields) {
-        return queryWrapperParser.parseWrapper(obj, includeInheritedFields);
+    public <T> QueryWrapper<T> parse(Object obj, boolean includedSuperclasses) {
+        return queryWrapperParser.parseWrapper(obj, includedSuperclasses);
     }
 
     public <T> QueryWrapper<T> parse(Object obj, @Nullable QueryOption<T> option) {
         return queryWrapperParser.parseWrapper(obj, option);
     }
 
-    public <T> QueryWrapper<T> parse(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> option) {
-        return queryWrapperParser.parseWrapper(obj, includeInheritedFields, option);
+    public <T> QueryWrapper<T> parse(Object obj, boolean includedSuperclasses, @Nullable QueryOption<T> option) {
+        return queryWrapperParser.parseWrapper(obj, includedSuperclasses, option);
     }
 
 }

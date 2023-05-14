@@ -8,6 +8,6 @@ public interface QueryClassParser extends QueryFieldParser {
         return parseClass(clz, false);
     }
 
-    QueryClass parseClass(Class<?> clz, boolean includeInheritedFields);
+    QueryClass parseClass(Class<?> clz, boolean includedSuperclasses);
 
 }

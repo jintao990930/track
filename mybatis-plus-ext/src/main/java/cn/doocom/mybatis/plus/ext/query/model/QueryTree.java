@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 public class QueryTree {
 
     private final Class<?> sourceClass;
-    private final boolean includeInheritedFields;
+    private final boolean includedSuperclasses;
     private final QueryNode root;
     private final Map<String, QueryNode> queryNodeMap;
 
     public QueryTree(QueryClass queryClass) {
         sourceClass = queryClass.getSourceClass();
-        includeInheritedFields = queryClass.isIncludeInheritedFields();
+        includedSuperclasses = queryClass.isIncludedSuperclasses();
         queryNodeMap = new HashMap<>();
         root = buildTree(queryClass.getQueryGroups(), queryClass.getQueryFields());
     }
@@ -30,8 +30,8 @@ public class QueryTree {
         return sourceClass;
     }
 
-    public boolean isIncludeInheritedFields() {
-        return includeInheritedFields;
+    public boolean isIncludedSuperclasses() {
+        return includedSuperclasses;
     }
 
     public QueryNode getRoot() {
@@ -42,7 +42,7 @@ public class QueryTree {
         return queryNodeMap;
     }
 
-    private QueryNode buildTree(QueryGroup[] groups, List<QueryField> fields) {
+    private QueryNode buildTree(List<QueryGroup> groups, List<QueryField> fields) {
         QueryNode root = new QueryNode(QueryConst.DEFAULT_ROOT_GROUP_ID);
         queryNodeMap.put(QueryConst.DEFAULT_ROOT_GROUP_ID, root);
         Map<String, String> id2ParentIdMap = new HashMap<>();

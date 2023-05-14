@@ -23,12 +23,12 @@ public class SimpleQueryClassParser extends BaseQueryClassParser {
     }
 
     @Override
-    public QueryClass parseClass(Class<?> clz, boolean includeInheritedFields) {
-        List<Field> annotatedFields = AnnotationUtil.getAnnotatedFields(clz, QueryColumn.class, includeInheritedFields);
+    public QueryClass parseClass(Class<?> clz, boolean includedSuperclasses) {
+        List<Field> annotatedFields = AnnotationUtil.getAnnotatedFields(clz, QueryColumn.class, includedSuperclasses);
         List<QueryField> queryFields = new ArrayList<>(annotatedFields.size());
         annotatedFields.forEach(e -> queryFields.add(queryFieldParser.parseField(e)));
-        QueryGroup[] queryGroups = clz.getDeclaredAnnotationsByType(QueryGroup.class);
-        return new QueryClass(clz, includeInheritedFields, queryFields, queryGroups);
+        List<QueryGroup> queryGroups = AnnotationUtil.getDeclaredAnnotationsByType(clz, QueryGroup.class, includedSuperclasses);
+        return new QueryClass(clz, includedSuperclasses, queryFields, queryGroups);
     }
 
 }

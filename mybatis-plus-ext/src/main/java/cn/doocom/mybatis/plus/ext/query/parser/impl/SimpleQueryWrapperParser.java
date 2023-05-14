@@ -19,8 +19,8 @@ public class SimpleQueryWrapperParser extends BaseQueryWrapperParser {
     }
 
     @Override
-    public <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> option) {
-        QueryClass queryClass = parseClass(obj.getClass(), includeInheritedFields);
+    public <T> QueryWrapper<T> parseWrapper(Object obj, boolean includedSuperclasses, @Nullable QueryOption<T> option) {
+        QueryClass queryClass = parseClass(obj.getClass(), includedSuperclasses);
         QueryTree queryTree = new QueryTree(queryClass);
         return parse(obj, queryTree, option);
     }

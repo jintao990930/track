@@ -7,14 +7,14 @@ import java.util.List;
 public class QueryClass {
 
     private final Class<?> sourceClass;
-    private final boolean includeInheritedFields;
+    private final boolean includedSuperclasses;
     private final List<QueryField> queryFields;
-    private final QueryGroup[] queryGroups;
+    private final List<QueryGroup> queryGroups;
 
-    public QueryClass(Class<?> sourceClass, boolean includeInheritedFields,
-                      List<QueryField> queryFields, QueryGroup[] queryGroups) {
+    public QueryClass(Class<?> sourceClass, boolean includedSuperclasses,
+                      List<QueryField> queryFields, List<QueryGroup> queryGroups) {
         this.sourceClass = sourceClass;
-        this.includeInheritedFields = includeInheritedFields;
+        this.includedSuperclasses = includedSuperclasses;
         this.queryFields = queryFields;
         this.queryGroups = queryGroups;
     }
@@ -23,15 +23,15 @@ public class QueryClass {
         return sourceClass;
     }
 
-    public boolean isIncludeInheritedFields() {
-        return includeInheritedFields;
+    public boolean isIncludedSuperclasses() {
+        return includedSuperclasses;
     }
 
     public List<QueryField> getQueryFields() {
         return queryFields;
     }
 
-    public QueryGroup[] getQueryGroups() {
+    public List<QueryGroup> getQueryGroups() {
         return queryGroups;
     }
 

@@ -10,14 +10,14 @@ public interface QueryWrapperParser extends QueryClassParser {
         return parseWrapper(obj, false, null);
     }
 
-    default <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields) {
-        return parseWrapper(obj, includeInheritedFields, null);
+    default <T> QueryWrapper<T> parseWrapper(Object obj, boolean includedSuperclasses) {
+        return parseWrapper(obj, includedSuperclasses, null);
     }
 
     default <T> QueryWrapper<T> parseWrapper(Object obj, @Nullable QueryOption<T> option) {
         return parseWrapper(obj, false, option);
     }
 
-    <T> QueryWrapper<T> parseWrapper(Object obj, boolean includeInheritedFields, @Nullable QueryOption<T> option);
+    <T> QueryWrapper<T> parseWrapper(Object obj, boolean includedSuperclasses, @Nullable QueryOption<T> option);
 
 }
