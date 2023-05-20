@@ -51,4 +51,18 @@ public class PostProcessorTests {
         userMapper.selectList(wrapper);
     }
 
+    @Test
+    public void withMultiPostProcessorTest() {
+        UserDTO4 userDTO4 = new UserDTO4();
+        QueryOption<User> option = QueryOption.<User>builder()
+                .withProcessor(QueryConst.BETA, w -> {
+                    w.lambda().gt(User::getAge, 17);
+                })
+                .withProcessor(QueryConst.BETA, w -> {
+                    w.lambda().eq(User::getId, 3);
+                }).build();
+        QueryWrapper<User> wrapper = queryWrapperTemplate.parse(userDTO4, true, option);
+        userMapper.selectList(wrapper);
+    }
+
 }
