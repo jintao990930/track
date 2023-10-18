@@ -18,15 +18,15 @@ public class QueryWrapperTemplate {
     }
 
     public <T> QueryWrapper<T> parse(Object obj) {
-        return queryWrapperParser.parseWrapper(obj);
+        return queryWrapperParser.parseWrapper(obj, false, null);
     }
 
     public <T> QueryWrapper<T> parse(Object obj, boolean includedSuperclasses) {
-        return queryWrapperParser.parseWrapper(obj, includedSuperclasses);
+        return queryWrapperParser.parseWrapper(obj, includedSuperclasses, null);
     }
 
     public <T> QueryWrapper<T> parse(Object obj, @Nullable QueryOption<T> option) {
-        return queryWrapperParser.parseWrapper(obj, option);
+        return queryWrapperParser.parseWrapper(obj, false, option);
     }
 
     public <T> QueryWrapper<T> parse(Object obj, boolean includedSuperclasses, @Nullable QueryOption<T> option) {
