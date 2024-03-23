@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>cn.doocom</groupId>
+    <groupId>cn.lianwu</groupId>
     <artifactId>mybatis-plus-ext-sample</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -50,14 +50,8 @@
         </dependency>
         <!-- mybatis-plus-ext -->
         <dependency>
-            <groupId>cn.doocom</groupId>
+            <groupId>cn.lianwu</groupId>
             <artifactId>mybatis-plus-ext</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-core</artifactId>
-                </exclusion>
-            </exclusions>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

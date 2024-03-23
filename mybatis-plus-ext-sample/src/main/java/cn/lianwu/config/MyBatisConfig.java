@@ -1,11 +1,11 @@
-package cn.doocom.config;
+package cn.lianwu.config;
 
-import cn.doocom.mybatis.plus.ext.query.QueryWrapperTemplate;
+import cn.lianwu.mybatis.plus.ext.query.QueryWrapperTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MyBatisExtConfig {
+public class MyBatisConfig {
 
     @Bean
     public QueryWrapperTemplate queryWrapperParser() {

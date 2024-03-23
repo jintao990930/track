@@ -1,7 +1,7 @@
-package cn.doocom.mybatis.plus.ext.dto;
+package cn.lianwu.mybatis.plus.ext.dto;
 
-import cn.doocom.mybatis.plus.ext.query.annotation.QueryColumn;
-import cn.doocom.mybatis.plus.ext.query.enums.Operator;
+import cn.lianwu.mybatis.plus.ext.query.annotation.QueryColumn;
+import cn.lianwu.mybatis.plus.ext.query.enums.Operator;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,9 +14,9 @@ public class UserDTO2 {
     @QueryColumn(Operator.NE)
     private Integer age;
     @QueryColumn(value = Operator.GT, column = "birthday")
-    private LocalDate birthdayStart;
+    private LocalDate minBirthday;
     @QueryColumn(value = Operator.LT, column = "birthday")
-    private LocalDate birthdayEnd;
+    private LocalDate maxBirthday;
     @QueryColumn(value = Operator.NOT_LIKE, column = "email")
     private String notLikeEmail;
     @QueryColumn(value = Operator.LIKE_LEFT, column = "email")

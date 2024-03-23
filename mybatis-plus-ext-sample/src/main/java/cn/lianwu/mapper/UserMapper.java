@@ -1,6 +1,6 @@
-package cn.doocom.mapper;
+package cn.lianwu.mapper;
 
-import cn.doocom.entity.User;
+import cn.lianwu.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 public interface UserMapper extends BaseMapper<User> {
