@@ -6,7 +6,7 @@ import cn.lianwu.mybatis.plus.ext.dto.UserDTO4;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.lianwu.mybatis.plus.ext.query.QueryOption;
 import cn.lianwu.mybatis.plus.ext.query.QueryWrapperTemplate;
-import cn.lianwu.mybatis.plus.ext.query.consts.QueryConsts;
+import cn.lianwu.mybatis.plus.ext.query.QueryConstants;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ public class PostProcessorTests {
                 .withPostProcessor(w -> {
                     w.lambda().gt(User::getAge, 17);
                 })
-                .withPostProcessor(QueryConsts.BETA, w -> {
+                .withPostProcessor(QueryConstants.GROUP_B, w -> {
                     w.lambda().eq(User::getId, 3);
                 }).build();
         QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, true, option);
@@ -85,10 +85,10 @@ public class PostProcessorTests {
     public void withMultiPostProcessorTest() {
         UserDTO4 dto = new UserDTO4();
         QueryOption<User> option = QueryOption.<User>builder()
-                .withPostProcessor(QueryConsts.BETA, w -> {
+                .withPostProcessor(QueryConstants.GROUP_B, w -> {
                     w.lambda().gt(User::getAge, 17);
                 })
-                .withPostProcessor(QueryConsts.BETA, w -> {
+                .withPostProcessor(QueryConstants.GROUP_B, w -> {
                     w.lambda().eq(User::getId, 3);
                 }).build();
         QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, true, option);
@@ -103,14 +103,14 @@ public class PostProcessorTests {
         assert users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
     }
 
-    private List<User> comparedUsers(UserDTO4 dto, boolean includedSuperclasses) {
-        boolean setEqId = includedSuperclasses && Objects.nonNull(dto.getId());
-        boolean geBirthday = includedSuperclasses && Objects.nonNull(dto.getMinBirthday());
-        boolean leBirthday = includedSuperclasses && Objects.nonNull(dto.getMaxBirthday());
+    private List<User> comparedUsers(UserDTO4 dto, boolean includeInheritedFields) {
+        boolean setEqId = includeInheritedFields && Objects.nonNull(dto.getId());
+        boolean geBirthday = includeInheritedFields && Objects.nonNull(dto.getMinBirthday());
+        boolean leBirthday = includeInheritedFields && Objects.nonNull(dto.getMaxBirthday());
         boolean geAge = Objects.nonNull(dto.getAge());
 
-        boolean likeEmail = includedSuperclasses && StringUtils.isNotBlank(dto.getKeyword());
-        boolean likeName = includedSuperclasses && StringUtils.isNotBlank(dto.getKeyword());
+        boolean likeEmail = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
+        boolean likeName = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
         return userMapper.selectList(Wrappers.<User>lambdaQuery()
                 .and(setEqId || geBirthday || leBirthday || geAge, w -> {
                     w.eq(setEqId, User::getId, dto.getId())

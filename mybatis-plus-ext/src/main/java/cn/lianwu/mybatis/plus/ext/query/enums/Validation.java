@@ -6,17 +6,17 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.function.Function;
 
-public enum Check {
+public enum Validation {
 
-    NEVER(o -> true),
+    PASS(o -> true),
 
-    NOT_EMPTY(Check::isNotEmpty),
+    NOT_EMPTY(Validation::isNotEmpty),
 
     ;
 
     final Function<Object, Boolean> expression;
 
-    Check(Function<Object, Boolean> expression) {
+    Validation(Function<Object, Boolean> expression) {
         this.expression = expression;
     }
 

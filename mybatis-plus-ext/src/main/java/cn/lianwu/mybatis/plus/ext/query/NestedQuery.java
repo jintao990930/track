@@ -1,4 +1,4 @@
-package cn.lianwu.mybatis.plus.ext.query.annotation;
+package cn.lianwu.mybatis.plus.ext.query;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,8 +7,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface QueryColumns {
+public @interface NestedQuery {
 
-    QueryColumn[] value();
+    /**
+     * alias for includeInheritedFields
+     */
+    boolean value() default false;
 
 }

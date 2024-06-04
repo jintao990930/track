@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @SpringBootTest
-public class IncludeSuperclassesTests {
+public class IncludeInheritedFieldsTests {
 
     @Autowired
     private QueryWrapperTemplate queryWrapperTemplate;
@@ -39,7 +39,7 @@ public class IncludeSuperclassesTests {
     }
 
     @Test
-    public void notIncludedSuperclassConditionTest() {
+    public void notIncludeInheritedFieldsConditionTest() {
         UserDTO4 dto = new UserDTO4();
         dto.setId(1L);
         dto.setKeyword("Jone");
@@ -56,7 +56,7 @@ public class IncludeSuperclassesTests {
     }
 
     @Test
-    public void includedSuperclassConditionTest() {
+    public void includeInheritedFieldsConditionTest() {
         UserDTO4 dto = new UserDTO4();
         dto.setId(1L);
         dto.setKeyword("Jone");
@@ -90,14 +90,14 @@ public class IncludeSuperclassesTests {
 
     }
 
-    private List<User> comparedUsers(UserDTO4 dto, boolean includedSuperclasses) {
-        boolean setEqId = includedSuperclasses && Objects.nonNull(dto.getId());
-        boolean geBirthday = includedSuperclasses && Objects.nonNull(dto.getMinBirthday());
-        boolean leBirthday = includedSuperclasses && Objects.nonNull(dto.getMaxBirthday());
+    private List<User> comparedUsers(UserDTO4 dto, boolean includeInheritedFields) {
+        boolean setEqId = includeInheritedFields && Objects.nonNull(dto.getId());
+        boolean geBirthday = includeInheritedFields && Objects.nonNull(dto.getMinBirthday());
+        boolean leBirthday = includeInheritedFields && Objects.nonNull(dto.getMaxBirthday());
         boolean geAge = Objects.nonNull(dto.getAge());
 
-        boolean likeEmail = includedSuperclasses && StringUtils.isNotBlank(dto.getKeyword());
-        boolean likeName = includedSuperclasses && StringUtils.isNotBlank(dto.getKeyword());
+        boolean likeEmail = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
+        boolean likeName = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
         return userMapper.selectList(Wrappers.<User>lambdaQuery()
                 .and(setEqId || geBirthday || leBirthday || geAge, w -> {
                     w.eq(setEqId, User::getId, dto.getId())

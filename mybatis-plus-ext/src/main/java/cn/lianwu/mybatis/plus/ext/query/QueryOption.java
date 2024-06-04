@@ -1,6 +1,5 @@
 package cn.lianwu.mybatis.plus.ext.query;
 
-import cn.lianwu.mybatis.plus.ext.query.consts.QueryConsts;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.HashMap;
@@ -13,8 +12,8 @@ public class QueryOption<T> {
 
     private final Map<String, Consumer<QueryWrapper<T>>> groupId2PostProcessorMap;
 
-    private QueryOption(Map<String, Consumer<QueryWrapper<T>>> groupId2PostProcessorMap) {
-        this.groupId2PostProcessorMap = groupId2PostProcessorMap;
+    private QueryOption(QueryOptionBuilder<T> builder) {
+        this.groupId2PostProcessorMap = builder.groupId2PostProcessorMap;
     }
 
     public static <T> QueryOptionBuilder<T> builder() {
@@ -29,12 +28,10 @@ public class QueryOption<T> {
 
         private Map<String, Consumer<QueryWrapper<T>>> groupId2PostProcessorMap;
 
-        private QueryOptionBuilder() {
-
-        }
+        private QueryOptionBuilder() { }
 
         public QueryOptionBuilder<T> withPostProcessor(Consumer<QueryWrapper<T>> postProcessor) {
-            return withPostProcessor(QueryConsts.DEFAULT_ROOT_GROUP_ID, postProcessor);
+            return withPostProcessor(QueryConstants.ROOT_GROUP, postProcessor);
         }
 
         public QueryOptionBuilder<T> withPostProcessor(String groupId, Consumer<QueryWrapper<T>> postProcessor) {
@@ -53,7 +50,7 @@ public class QueryOption<T> {
         }
 
         public QueryOption<T> build() {
-            return new QueryOption<>(groupId2PostProcessorMap);
+            return new QueryOption<>(this);
         }
 
     }
