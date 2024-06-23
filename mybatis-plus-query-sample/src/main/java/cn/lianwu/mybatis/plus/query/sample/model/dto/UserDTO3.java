@@ -1,6 +1,6 @@
-package cn.lianwu.model.dto;
+package cn.lianwu.mybatis.plus.query.sample.model.dto;
 
-import cn.lianwu.consts.QueryGroupConstant;
+import cn.lianwu.mybatis.plus.query.sample.consts.QueryGroupConstant;
 import cn.lianwu.mybatis.plus.query.Query;
 import cn.lianwu.mybatis.plus.query.function.ConditionType;
 import cn.lianwu.mybatis.plus.query.function.Logic;

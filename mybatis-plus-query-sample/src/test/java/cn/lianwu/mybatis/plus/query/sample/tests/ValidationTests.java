@@ -1,9 +1,9 @@
-package cn.lianwu.mybatis.plus.ext.tests;
+package cn.lianwu.mybatis.plus.query.sample.tests;
 
-import cn.lianwu.model.dto.UserDTO;
-import cn.lianwu.model.entity.User;
+import cn.lianwu.mybatis.plus.query.sample.model.dto.UserDTO;
+import cn.lianwu.mybatis.plus.query.sample.model.entity.User;
 import cn.lianwu.mybatis.plus.query.QueryWrappers;
-import cn.lianwu.service.UserService;
+import cn.lianwu.mybatis.plus.query.sample.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

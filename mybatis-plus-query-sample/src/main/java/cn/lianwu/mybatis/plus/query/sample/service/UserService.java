@@ -1,8 +1,8 @@
-package cn.lianwu.service;
+package cn.lianwu.mybatis.plus.query.sample.service;
 
-import cn.lianwu.model.dto.*;
-import cn.lianwu.model.entity.User;
-import cn.lianwu.mapper.UserMapper;
+import cn.lianwu.mybatis.plus.query.sample.model.dto.*;
+import cn.lianwu.mybatis.plus.query.sample.model.entity.User;
+import cn.lianwu.mybatis.plus.query.sample.mapper.UserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

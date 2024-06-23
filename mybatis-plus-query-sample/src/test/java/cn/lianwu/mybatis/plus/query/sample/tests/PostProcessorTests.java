@@ -1,11 +1,11 @@
-package cn.lianwu.mybatis.plus.ext.tests;
+package cn.lianwu.mybatis.plus.query.sample.tests;
 
-import cn.lianwu.consts.QueryGroupConstant;
-import cn.lianwu.model.dto.UserDTO4;
-import cn.lianwu.model.entity.User;
+import cn.lianwu.mybatis.plus.query.sample.consts.QueryGroupConstant;
+import cn.lianwu.mybatis.plus.query.sample.model.dto.UserDTO4;
+import cn.lianwu.mybatis.plus.query.sample.model.entity.User;
 import cn.lianwu.mybatis.plus.query.QueryOption;
 import cn.lianwu.mybatis.plus.query.QueryWrappers;
-import cn.lianwu.service.UserService;
+import cn.lianwu.mybatis.plus.query.sample.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package cn.lianwu.consts;
+package cn.lianwu.mybatis.plus.query.sample.consts;
 
 public class QueryGroupConstant {
 

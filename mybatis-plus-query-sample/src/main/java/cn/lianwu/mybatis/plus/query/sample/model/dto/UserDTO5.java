@@ -1,4 +1,4 @@
-package cn.lianwu.model.dto;
+package cn.lianwu.mybatis.plus.query.sample.model.dto;
 
 import cn.lianwu.mybatis.plus.query.Query;
 import cn.lianwu.mybatis.plus.query.function.ConditionType;
