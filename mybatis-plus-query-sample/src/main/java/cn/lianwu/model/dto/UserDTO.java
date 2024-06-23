@@ -1,8 +1,8 @@
 package cn.lianwu.model.dto;
 
-import cn.lianwu.mybatis.plus.ext.query.Query;
-import cn.lianwu.mybatis.plus.ext.query.function.ConditionType;
-import cn.lianwu.mybatis.plus.ext.query.function.Validator;
+import cn.lianwu.mybatis.plus.query.Query;
+import cn.lianwu.mybatis.plus.query.function.ConditionType;
+import cn.lianwu.mybatis.plus.query.function.Validator;
 import lombok.Data;
 
 import java.util.List;

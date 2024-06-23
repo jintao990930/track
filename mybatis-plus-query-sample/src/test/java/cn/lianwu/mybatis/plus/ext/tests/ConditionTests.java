@@ -3,7 +3,7 @@ package cn.lianwu.mybatis.plus.ext.tests;
 import cn.lianwu.model.dto.UserDTO;
 import cn.lianwu.model.dto.UserDTO2;
 import cn.lianwu.model.entity.User;
-import cn.lianwu.mybatis.plus.ext.query.QueryWrappers;
+import cn.lianwu.mybatis.plus.query.QueryWrappers;
 import cn.lianwu.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;

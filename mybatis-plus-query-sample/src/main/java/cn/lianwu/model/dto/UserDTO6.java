@@ -1,10 +1,10 @@
 package cn.lianwu.model.dto;
 
 import cn.lianwu.consts.QueryGroupConstant;
-import cn.lianwu.mybatis.plus.ext.query.NestedQuery;
-import cn.lianwu.mybatis.plus.ext.query.Query;
-import cn.lianwu.mybatis.plus.ext.query.function.ConditionType;
-import cn.lianwu.mybatis.plus.ext.query.function.Logic;
+import cn.lianwu.mybatis.plus.query.NestedQuery;
+import cn.lianwu.mybatis.plus.query.Query;
+import cn.lianwu.mybatis.plus.query.function.ConditionType;
+import cn.lianwu.mybatis.plus.query.function.Logic;
 import lombok.Data;
 
 @Data

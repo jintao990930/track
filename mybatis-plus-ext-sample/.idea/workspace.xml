@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7676f4d6-015c-4d18-8c59-482369a8ca6b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/MyBatisPlusExtSampleApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/consts/QueryGroupConstant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/mapper/UserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO4.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO5.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO6.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/dto/UserDTO7.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/model/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/lianwu/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/data-h2.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/schema-h2.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/ConditionTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/IncludeInheritedFieldsTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/MultiGroupTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/NestedQueryTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/PostProcessorTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/lianwu/mybatis/plus/ext/tests/ValidationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/NestedQuery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/Query.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/QueryConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/QueryContainer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/QueryOption.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/QueryWrappers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/Condition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/ConditionType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/Logic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/MultiValueCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/PostProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/Validation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/function/Validator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/ExecutableQueryStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/NestedQueryField.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/PreparedQueryStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/QueryClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/QueryField.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/model/SimpleQueryField.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/BaseQueryClassProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/BaseQueryWrapperProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/DefaultQueryClassProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/DefaultQueryWrapperProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/NestedQueryFieldProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/QueryClassProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/QueryFieldProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/QueryWrapperProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/processor/SimpleQueryFieldProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/reflection/FieldGetters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/reflection/InstanceGetter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/reflection/InstanceGetters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/reflection/ReflectionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus-ext/src/main/java/cn/lianwu/mybatis/plus/ext/query/reflection/Reflections.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="LLMProjectSettings">
+    <option name="turned_on" value="false" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2i6QkCitP52gfinkPihhoOXs0XO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/coding/projects/remote/track/mybatis-plus-ext-sample&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-ae57be32" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\LianWu\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7676f4d6-015c-4d18-8c59-482369a8ca6b" name="Changes" comment="" />
+      <created>1711553922165</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711553922165</updated>
+      <workItem from="1718808689201" duration="598000" />
+      <workItem from="1718848278105" duration="627000" />
+      <workItem from="1718900118421" duration="599000" />
+      <workItem from="1719164889074" duration="39000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
