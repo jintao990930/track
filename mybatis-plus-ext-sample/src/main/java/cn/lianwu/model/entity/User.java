@@ -1,4 +1,4 @@
-package cn.lianwu.entity;
+package cn.lianwu.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

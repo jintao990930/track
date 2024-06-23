@@ -1,43 +1,36 @@
 package cn.lianwu.mybatis.plus.ext.tests;
 
-import cn.lianwu.entity.User;
-import cn.lianwu.mapper.UserMapper;
-import cn.lianwu.mybatis.plus.ext.dto.UserDTO4;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.lianwu.consts.QueryGroupConstant;
+import cn.lianwu.model.dto.UserDTO4;
+import cn.lianwu.model.entity.User;
 import cn.lianwu.mybatis.plus.ext.query.QueryOption;
-import cn.lianwu.mybatis.plus.ext.query.QueryWrapperTemplate;
-import cn.lianwu.mybatis.plus.ext.query.QueryConstants;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import cn.lianwu.mybatis.plus.ext.query.QueryWrappers;
+import cn.lianwu.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 @SpringBootTest
 public class PostProcessorTests {
 
-    @Autowired
-    private QueryWrapperTemplate queryWrapperTemplate;
-
-    @Autowired
-    private UserMapper userMapper;
+    @Resource
+    private UserService userService;
 
     @Test
     public void emptyPostProcessorTest() {
         UserDTO4 dto = new UserDTO4();
         QueryOption<User> option = QueryOption.<User>builder()
                 .withPostProcessor(w -> {}).build();
-        QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, option);
-        List<User> users = userMapper.selectList(wrapper);
+        QueryWrapper<User> wrapper = QueryWrappers.parse(dto, option);
+        List<User> users = userService.list(wrapper);
 
-        List<User> comparedUsers = comparedUsers(dto, false);
+        List<User> comparedUsers = userService.listUsers(dto, false);
 
-        assert users.size() == comparedUsers.size();
-
-        assert users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
+        assert users.size() == comparedUsers.size() && users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
 
     }
 
@@ -48,81 +41,52 @@ public class PostProcessorTests {
                 .withPostProcessor("lianwu", w -> {
                     w.lambda().eq(User::getId, -1);
                 }).build();
-        QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, option);
-        List<User> users = userMapper.selectList(wrapper);
+        QueryWrapper<User> wrapper = QueryWrappers.parse(dto, option);
+        List<User> users = userService.list(wrapper);
 
-        List<User> comparedUsers = comparedUsers(dto, false);
+        List<User> comparedUsers = userService.listUsers(dto, false);
 
-        assert users.size() == comparedUsers.size();
-
-        assert users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
-    }
-
-    @Test
-    public void withPostProcessorTest() {
-        UserDTO4 dto = new UserDTO4();
-        QueryOption<User> option = QueryOption.<User>builder()
-                .withPostProcessor(w -> {
-                    w.lambda().gt(User::getAge, 17);
-                })
-                .withPostProcessor(QueryConstants.GROUP_B, w -> {
-                    w.lambda().eq(User::getId, 3);
-                }).build();
-        QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, true, option);
-        List<User> users = userMapper.selectList(wrapper);
-
-        List<User> comparedUsers = userMapper.selectList(Wrappers.<User>lambdaQuery()
-                .ge(User::getAge, 17)
-                .and(w -> w.eq(User::getId, 3)));
-
-        assert users.size() == comparedUsers.size();
-
-        assert users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
-
+        assert users.size() == comparedUsers.size() && users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
     }
 
     @Test
     public void withMultiPostProcessorTest() {
         UserDTO4 dto = new UserDTO4();
         QueryOption<User> option = QueryOption.<User>builder()
-                .withPostProcessor(QueryConstants.GROUP_B, w -> {
+                .withPostProcessor(w -> {
                     w.lambda().gt(User::getAge, 17);
                 })
-                .withPostProcessor(QueryConstants.GROUP_B, w -> {
+                .withPostProcessor(QueryGroupConstant.GROUP_B, w -> {
                     w.lambda().eq(User::getId, 3);
                 }).build();
-        QueryWrapper<User> wrapper = queryWrapperTemplate.parse(dto, true, option);
-        List<User> users = userMapper.selectList(wrapper);
+        QueryWrapper<User> wrapper = QueryWrappers.parse(dto, true, option);
+        List<User> users = userService.list(wrapper);
 
-        List<User> comparedUsers = userMapper.selectList(Wrappers.<User>lambdaQuery()
+        List<User> comparedUsers = userService.list(Wrappers.<User>lambdaQuery()
+                .ge(User::getAge, 17)
+                .and(w -> w.eq(User::getId, 3)));
+
+        assert users.size() == comparedUsers.size() && users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
+    }
+
+    @Test
+    public void withRepeatedPostProcessorTest() {
+        UserDTO4 dto = new UserDTO4();
+        QueryOption<User> option = QueryOption.<User>builder()
+                .withPostProcessor(QueryGroupConstant.GROUP_B, w -> {
+                    w.lambda().gt(User::getAge, 17);
+                })
+                .withPostProcessor(QueryGroupConstant.GROUP_B, w -> {
+                    w.lambda().eq(User::getId, 3);
+                }).build();
+        QueryWrapper<User> wrapper = QueryWrappers.parse(dto, true, option);
+        List<User> users = userService.list(wrapper);
+
+        List<User> comparedUsers = userService.list(Wrappers.<User>lambdaQuery()
                 .and(w -> w.gt(User::getAge, 17)
                         .eq(User::getId, 3)));
 
-        assert users.size() == comparedUsers.size();
-
-        assert users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
-    }
-
-    private List<User> comparedUsers(UserDTO4 dto, boolean includeInheritedFields) {
-        boolean setEqId = includeInheritedFields && Objects.nonNull(dto.getId());
-        boolean geBirthday = includeInheritedFields && Objects.nonNull(dto.getMinBirthday());
-        boolean leBirthday = includeInheritedFields && Objects.nonNull(dto.getMaxBirthday());
-        boolean geAge = Objects.nonNull(dto.getAge());
-
-        boolean likeEmail = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
-        boolean likeName = includeInheritedFields && StringUtils.isNotBlank(dto.getKeyword());
-        return userMapper.selectList(Wrappers.<User>lambdaQuery()
-                .and(setEqId || geBirthday || leBirthday || geAge, w -> {
-                    w.eq(setEqId, User::getId, dto.getId())
-                            .ge(geBirthday, User::getBirthday, dto.getMinBirthday())
-                            .le(leBirthday, User::getBirthday, dto.getMaxBirthday())
-                            .ge(geAge, User::getAge, dto.getAge());
-                })
-                .and(likeEmail || likeName, w -> {
-                    w.like(likeEmail, User::getEmail, dto.getKeyword())
-                            .or()
-                            .like(likeName, User::getName, dto.getKeyword());
-                }));
+        assert users.size() == comparedUsers.size() && users.containsAll(comparedUsers) && comparedUsers.containsAll(users);
     }
 
 }
