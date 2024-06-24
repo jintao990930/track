@@ -7,6 +7,13 @@
     <groupId>cn.lianwu</groupId>
     <artifactId>mybatis-plus-query</artifactId>
     <version>1.0.0</version>
+    <name>mybatis-plus-query</name>
+    <url>https://github.com/jintao990930/track/tree/280bc3938ff256b351b0675bae71acffab7027be/mybatis-plus-query</url>
+
+    <properties>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -16,5 +23,19 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
