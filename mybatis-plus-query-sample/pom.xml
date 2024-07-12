@@ -64,7 +64,7 @@
         <dependency>
             <groupId>site.lianwu</groupId>
             <artifactId>mybatis-plus-query</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 
