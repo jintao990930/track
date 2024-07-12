@@ -64,6 +64,8 @@ public class UserDto2 {
     userMapper.selectList(wrapper);
 ```
 
+更多示例：[mybatis-plus-query-sample](https://gitee.com/lianwu930/mybatis-plus-query-sample)
+
 ## 原理
 <ol>
 <li>注解驱动：MyBatis-Plus-Query利用Java的注解（Annotation）机制来声明查询条件。开发者通过在类字段上使用@Query和@NestedQuery注解来定义查询逻辑。</li>
