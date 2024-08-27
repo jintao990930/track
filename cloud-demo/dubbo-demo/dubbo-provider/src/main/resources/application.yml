@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: dubbo-demo-provider
+
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  protocol:
+    name: dubbo
+    port: -1
+#  registry:
+#    address:
+  provider:
+    filter: providerContextFilter
+  consumer:
+    filter: consumerContextFilter
+
+server:
+  port: 8082

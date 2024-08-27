@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: dubbo-demo-consumer
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-enable: true
+    qos-port: 33333
+    qos-accept-foreign-ip: false
+  protocol:
+    name: dubbo
+    port: -1
+#  registry:
+#    address:
+  consumer:
+    filter: consumerContextFilter
+  provider:
+    filter: providerContextFilter
+server:
+  port: 8081

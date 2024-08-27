@@ -1,0 +1,2 @@
+consumerContextFilter=site.lianwu.dubboconsumer.config.ConsumerContextFilter
+providerContextFilter=site.lianwu.dubboconsumer.config.ProviderContextFilter
